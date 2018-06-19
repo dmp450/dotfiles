@@ -53,6 +53,9 @@ autocmd Filetype c setlocal ts=8 sw=8 noexpandtab
 autocmd Filetype cpp setlocal ts=8 sw=8 noexpandtab
 autocmd Filetype make setlocal ts=8 sw=8 noexpandtab
 
+"set funky syntax highlighting types
+autocmd BufNewFile,BufRead *.sage set syntax=python
+
 "swap the : and ; makes it easier to do : commands since we won't have to
 "press shift
 noremap ; :

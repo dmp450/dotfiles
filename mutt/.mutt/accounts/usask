@@ -1,0 +1,33 @@
+set from = "dmp450@mail.usask.ca"
+set sendmail = "/usr/bin/msmtp -a usask"
+
+# Set folders
+set spoolfile = "+usask/INBOX"
+# set mbox = "+usask/archive"
+set postponed = "+usask/Drafts"
+set record = "+usask/Sent Items"
+set trash = "+usask/Trash"
+
+# Alternate email addresses.
+# alternates ^steffen.rademacker@kf-interactive.com$
+
+# custom signaure
+# set signature = ~/.mutt/signature
+
+color status green default
+
+macro index o "<shell-escape>mbsync usask<enter>" "run mbsync to sync mail for this account"
+
+macro index,pager J \
+  "<enter-command>set my_old_resolve=\$resolve noresolve<enter>\
+  <tag-prefix><clear-flag>n<enter-command>set resolve=\$my_old_resolve<enter>\
+  <save-message>+usask/Junk<enter>" \
+  "mark as read and move to junk folder"
+
+# macro index,pager A \
+#   "<save-message>+usask/archive<enter>"  \
+#   "move message to the archive"
+
+macro index,pager I \
+  "<save-message>+usask/INBOX<enter>"  \
+"move message to the inbox"

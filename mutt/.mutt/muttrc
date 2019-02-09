@@ -1,0 +1,220 @@
+#
+# Mutt configuration for fastmail
+#
+#
+set from="derek@derekperrin.com"
+set realname="Derek Perrin"
+
+# paths
+set folder = "~/.mail"
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+set mailcap_path = ~/.mutt/mailcap
+set tmpdir = ~/.mutt/tmp
+
+# basic options
+set wait_key = no
+set mbox_type = Maildir
+set timeout = 3
+set mail_check = 0
+set delete
+set quit
+set thorough_search
+unset confirmappend
+unset move
+unset mark_old
+unset beep_new
+
+
+# compose View Options
+set envelope_from               # which from?
+set edit_headers
+set fast_reply
+set askcc
+set fcc_attach
+set forward_format = "Fwd: %s"
+set forward_decode
+set attribution = "0n %d, %n wrote:"
+set reply_to
+set reverse_name
+set include
+set forward_quote
+set text_flowed
+unset sig_dashes
+unset mime_forward
+
+# status bar, date format, finding stuff etc.
+set status_chars = " *%A"
+set status_format = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+set date_format = "%d.%m.%Y %H:%M"
+set index_format = "[%Z] %?X?A&-? %D  %-20.20F  %s"
+set sort = threads
+set sort_aux = reverse-last-date-received
+set uncollapse_jump
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set send_charset = "utf-8:iso-8859-1:us-ascii"
+set charset = "utf-8"
+
+# when composing emails, use this command to get addresses from
+# the addressbook with khard first, and everything else from mu index
+set query_command = "( khard email --parsable '%s' | sed -n '1!p'; mu cfind --format=mutt-ab '%s' )"
+
+# Pager View Options
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+unset markers
+
+# email headers and attachments
+ignore *
+unignore from: to: cc: bcc: date: subject:
+unhdr_order *
+hdr_order from: to: cc: bcc: date: subject:
+alternative_order text/plain text/enriched text/html
+auto_view text/html
+
+# sidebar patch config
+set sidebar_visible
+set sidebar_short_path
+set sidebar_folder_indent
+set sidebar_width = 25
+set sidebar_divider_char = ' | '
+set sidebar_indent_string = '  ''
+set sidebar_format = "%B %* [%?N?%N / ?%S]"
+set mail_check_stats
+
+# Mailboxes to show in the sidebar.
+mailboxes =fastmail
+mailboxes =fastmail/INBOX 
+mailboxes =fastmail/Sent\ Items
+mailboxes =fastmail/Drafts
+mailboxes =fastmail/kijiji
+mailboxes =fastmail/Junk
+
+
+mailboxes =usask
+mailboxes =usask/INBOX =usask/Not\ Usask
+# mailboxes =viu
+# mailboxes =viu/INBOX =viu/archive =viu/sent =viu/drafts =viu/junk =viu/trash
+# mailboxes =mf
+# mailboxes =mf/INBOX =mf/archive =mf/sent =mf/drafts =mf/junk =mf/trash
+# mailboxes =kfi
+# mailboxes =kfi/INBOX =kfi/archive =kfi/sent =kfi/drafts =kfi/junk =kfi/trash
+# mailboxes =hsv
+# mailboxes =hsv/INBOX =hsv/archive =hsv/sent =hsv/drafts =hsv/junk =hsv/trash
+
+# source colors and keybindings
+# keeping those in one place makes it easier for my brain
+source ~/.mutt/colors
+source ~/.mutt/bindings
+
+# And finally the account config for multiple accounts
+#############################################################
+
+# by default, use fastmail
+set realname = "Derek Perrin"
+set spoolfile = "+fastmail/INBOX"
+source ~/.mutt/accounts/fastmail
+
+# when changing into other mailboxes, use different adresses etc.
+folder-hook fastmail/* source ~/.mutt/accounts/fastmail
+folder-hook usask/* source ~/.mutt/accounts/usask
+# set spoolfile = +INBOX
+# set postponed = +Drafts
+# set record = +"Sent Items"
+# 
+# # SMTP SETTINGS
+# set sendmail = "/usr/bin/msmtp"
+# set signature=~/.mutt/signature
+# set use_from
+# set envelope_from
+# set reverse_name
+# 
+# # USE HEADERCACHE FOR IMAP
+# set header_cache=~/.mutt/cache/headers
+# 
+# # SET DEFAULT EDITOR AS VIM AND MAKE SURE VIM KNOWS MUTT IS A MAIL CLIENT
+set editor="vim -c 'set syntax=mail ft=mail enc=utf-8'"
+# 
+# # SCROLL JUST ONE LINE INSTEAD OF FULL PAGE
+# set menu_scroll=yes
+# # SET CHARACTER SET ON MESSAGES SENT
+# set send_charset="utf-8"
+# 
+# # IF THERE IS NO CHARACTER SET ON INCOMING MAIL, ASSUME IT IS WINDOWS
+# set assumed_charset="iso-8859-1"
+# 
+# # IGNORE ALL HEADERS, AND THEN UNIGNORE THE IMPORTANT ONES.
+# ignore  *
+# unignore  From To Cc Bcc Date Subject
+# 
+# unhdr_order *
+# hdr_order From: To: Cc: Bcc: Date: Subject:
+# 
+# # brighten up stuff with colours, for more colouring examples see:
+# # # http://aperiodic.net/phil/configs/mutt/colors
+# color normal      white          black
+# color hdrdefault  green          default
+# color quoted      green          default
+# color quoted1     yellow         default
+# color quoted2     red            default
+# color signature   cyan           default
+# color indicator   brightyellow   red
+# color error       brightred      default
+# color status      brightwhite    blue
+# color tree        brightmagenta  black
+# color tilde       blue           default
+# color attachment  brightyellow   default
+# color markers     brightred      default
+# color message     white          black
+# color search      brightwhite    magenta
+# color bold        brightyellow   default
+# # if you don't like the black progress bar at the bottom of the screen,
+# # comment out the following line
+# color progress    white          black
+# 
+# auto_view application/msword
+# auto_view application/pdf
+# 
+# macro index <F8> "<shell-escape>mu find --clearlinks --format=links --linksdir=~/.mail/search " "mu find"
+# macro index <F9> "<change-folder-readonly>~/.mail/search" "mu find results"
+# 
+# # Use khard as an external address book
+# set query_command= "khard email --parsable '%s'"
+# bind editor <Tab> complete-query
+# bind editor ^T    complete
+# 
+# # Some more bindings
+# bind index,pager g noop
+# bind index gg first-entry
+# bind index G last-entry
+# 
+# bind pager gg top
+# bind pager G bottom
+# 
+# # Set mailcap path
+# 
+# # opening urls with urlscan
+# macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+# macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+# 
+# # Save all attachments
+# macro index,pager S "<pipe-message>ripmime -i - -d ~/Downloads && \
+#           rm ~/Downloads/textfile*" "Save all non-text attachments using ripmime"
+# 
+# # Allow mutt to add email addresses to khard's address book.
+# # Press 'A' when in an email to start import dialog
+# macro index,pager A \
+#     "<pipe-message>khard add-email<return>" \
+#     "add the sender email address to khard"
+# 
+# # ALIASES
+# 
+# # EXPERIMENTAL SIDEBAR SUPPORT
+# # set sidebar_visible=yes
+# # set sidebar_width=20
+# # mailboxes =INBOX =Drafts =Sent\ Items

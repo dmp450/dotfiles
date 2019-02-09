@@ -1,21 +1,22 @@
-# .bashrc
+# /etc/skel/.bashrc
+#
+# This file is sourced by all *interactive* bash shells on startup,
+# including some apparently interactive shells such as scp and rcp
+# that can't tolerate any output.  So make sure this doesn't display
+# anything or bad things will happen !
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+
+# Test for an interactive shell.  There is no need to set anything
+# past this point for scp and rcp, and it's important to refrain from
+# outputting anything in those cases.
+if [[ $- != *i* ]] ; then
+	# Shell is non-interactive.  Be done now!
+	return
 fi
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
 
-# User specific aliases and functions
-alias mutt=neomutt
+# Put your fun stuff here.
+complete -cf sudo
 bind 'set match-hidden-files off'
-
-# Needed for pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+alias mutt=neomutt
+export SAGE_BROWSER=/usr/bin/firefox

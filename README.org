@@ -1,0 +1,22 @@
+#+TITLE: Dotfiles
+#+AUTHOR: Derek Perrin
+#+EMAIL: derek@derekperrin.com
+#+DESCRIPTION: My dot files
+
+* Usage
+  Clone to home directory:
+
+  #+begin_src sh
+    $ git clone https://github.com/dmp450/dotfiles ~/dotfiles
+  #+end_src
+  Make sure [[https://www.gnu.org/software/stow/][GNU Stow]] is installed on your system. For Gentoo:
+  #+begin_src sh
+    # emerge -av app-admin/stow
+  #+end_src
+  Change to dotfiles directory and run the ~stow~ command on any directories whose contents should be in ~$HOME~.
+  Example, for creating links for files in ~dotfiles/vim~:
+  #+begin_src sh
+    $ cd dotfiles
+    $ stow vim
+  #+end_src
+  

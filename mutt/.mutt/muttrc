@@ -94,6 +94,7 @@ mailboxes =fastmail/Sent\ Items
 mailboxes =fastmail/Drafts
 mailboxes =fastmail/kijiji
 mailboxes =fastmail/Junk
+mailboxes =fastmail/Wedding
 
 
 mailboxes =usask

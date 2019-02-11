@@ -1,6 +1,6 @@
 # brighten up stuff with colours, for more colouring examples see:
 # # http://aperiodic.net/phil/configs/mutt/colors
-color normal      white          black
+#color normal      white          black
 color hdrdefault  green          default
 color quoted      green          default
 color quoted1     yellow         default

@@ -24,6 +24,7 @@ unset confirmappend
 unset move
 unset mark_old
 unset beep_new
+unset signature
 
 
 # compose View Options
@@ -129,7 +130,7 @@ folder-hook usask/* source ~/.mutt/accounts/usask
 # set record = +"Sent Items"
 # 
 # # SMTP SETTINGS
-# set sendmail = "/usr/bin/msmtp"
+set sendmail = "/usr/bin/msmtp"
 # set signature=~/.mutt/signature
 # set use_from
 # set envelope_from

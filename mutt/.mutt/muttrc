@@ -88,7 +88,7 @@ set sidebar_format = "%B %* [%?N?%N / ?%S]"
 set mail_check_stats
 
 # Mailboxes to show in the sidebar.
-mailboxes =fastmail
+# mailboxes =fastmail
 mailboxes =fastmail/INBOX 
 mailboxes =fastmail/Sent\ Items
 mailboxes =fastmail/Drafts
@@ -97,7 +97,7 @@ mailboxes =fastmail/Junk
 mailboxes =fastmail/Wedding
 
 
-mailboxes =usask
+# mailboxes =usask
 mailboxes =usask/INBOX =usask/Not\ Usask
 # mailboxes =viu
 # mailboxes =viu/INBOX =viu/archive =viu/sent =viu/drafts =viu/junk =viu/trash

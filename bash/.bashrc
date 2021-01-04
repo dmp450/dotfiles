@@ -19,4 +19,5 @@ fi
 complete -cf sudo
 bind 'set match-hidden-files off'
 alias mutt=neomutt
-export SAGE_BROWSER=/usr/bin/firefox
+
+neofetch

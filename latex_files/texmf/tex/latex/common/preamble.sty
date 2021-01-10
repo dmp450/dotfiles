@@ -1,0 +1,322 @@
+%% For more information on writing LaTeX packages and clasess, see
+%% https://www.latex-project.org/help/documentation/clsguide.pdf
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{math}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+
+%% Include packages and commands to include figures created in Inkscape.
+%% See https://castel.dev/post/lecture-notes-2/ for more details.
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+  \def\svgwidth{\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+%% Define theorem styles
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{ex}[thm]{Exercise}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{fact}[thm]{Fact}
+
+\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{recall}[thm]{Recall}
+
+\newenvironment{pf}{\begin{proof}\small}{\end{proof}}
+\newenvironment{soln}{\begin{proof}[Solution.] \small}{\end{proof}}
+
+%Caligraphic 
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%Bold letters 
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bB}{\mathbf{B}}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bG}{\mathbf{G}}
+\newcommand{\bH}{\mathbf{H}}
+\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bJ}{\mathbf{J}}
+\newcommand{\bK}{\mathbf{K}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\bM}{\mathbf{M}}
+\newcommand{\bN}{\mathbf{N}}
+\newcommand{\bO}{\mathbf{O}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bS}{\mathbf{S}}
+\newcommand{\bT}{\mathbf{T}}
+\newcommand{\bU}{\mathbf{U}}
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bW}{\mathbf{W}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bY}{\mathbf{Y}}
+\newcommand{\bZ}{\mathbf{Z}}
+
+% Blackboard bold letters
+\newcommand{\bbA}{\mathbb{A}}
+\newcommand{\bbB}{\mathbb{B}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbD}{\mathbb{D}}
+\newcommand{\bbE}{\mathbb{E}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbG}{\mathbb{G}}
+\newcommand{\bbH}{\mathbb{H}}
+\newcommand{\bbI}{\mathbb{I}}
+\newcommand{\bbJ}{\mathbb{J}}
+\newcommand{\bbK}{\mathbb{K}}
+
+\newcommand{\bbL}{\mathbb{L}}
+\newcommand{\bbM}{\mathbb{M}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbO}{\mathbb{O}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbS}{\mathbb{S}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbU}{\mathbb{U}}
+\newcommand{\bbV}{\mathbb{V}}
+\newcommand{\bbW}{\mathbb{W}}
+\newcommand{\bbX}{\mathbb{X}}
+\newcommand{\bbY}{\mathbb{Y}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+
+%Fraktur letters
+\newcommand{\frakA}{\mathfrak{A}}
+\newcommand{\frakB}{\mathfrak{B}}
+\newcommand{\frakC}{\mathfrak{C}}
+\newcommand{\frakD}{\mathfrak{D}}
+\newcommand{\frakE}{\mathfrak{E}}
+\newcommand{\frakF}{\mathfrak{F}}
+\newcommand{\frakG}{\mathfrak{G}}
+\newcommand{\frakH}{\mathfrak{H}}
+\newcommand{\frakI}{\mathfrak{I}}
+\newcommand{\frakJ}{\mathfrak{J}}
+\newcommand{\frakK}{\mathfrak{K}}
+\newcommand{\frakL}{\mathfrak{L}}
+\newcommand{\frakM}{\mathfrak{M}}
+\newcommand{\frakN}{\mathfrak{N}}
+\newcommand{\frakO}{\mathfrak{O}}
+\newcommand{\frakP}{\mathfrak{P}}
+\newcommand{\frakQ}{\mathfrak{Q}}
+\newcommand{\frakR}{\mathfrak{R}}
+\newcommand{\frakS}{\mathfrak{S}}
+\newcommand{\frakT}{\mathfrak{T}}
+\newcommand{\frakU}{\mathfrak{U}}
+\newcommand{\frakV}{\mathfrak{V}}
+\newcommand{\frakW}{\mathfrak{W}}
+\newcommand{\frakX}{\mathfrak{X}}
+\newcommand{\frakY}{\mathfrak{Y}}
+\newcommand{\frakZ}{\mathfrak{Z}}
+
+\newcommand{\fraka}{\mathfrak{a}}
+\newcommand{\frakb}{\mathfrak{b}}
+\newcommand{\frakc}{\mathfrak{c}}
+\newcommand{\frakd}{\mathfrak{d}}
+\newcommand{\frake}{\mathfrak{e}}
+\newcommand{\frakf}{\mathfrak{f}}
+\newcommand{\frakg}{\mathfrak{g}}
+\newcommand{\frakh}{\mathfrak{h}}
+\newcommand{\fraki}{\mathfrak{i}}
+\newcommand{\frakj}{\mathfrak{j}}
+\newcommand{\frakk}{\mathfrak{k}}
+\newcommand{\frakl}{\mathfrak{l}}
+\newcommand{\frakm}{\mathfrak{m}}
+\newcommand{\frakn}{\mathfrak{n}}
+\newcommand{\frako}{\mathfrak{o}}
+\newcommand{\frakp}{\mathfrak{p}}
+\newcommand{\frakq}{\mathfrak{q}}
+\newcommand{\frakr}{\mathfrak{r}}
+\newcommand{\fraks}{\mathfrak{s}}
+\newcommand{\frakt}{\mathfrak{t}}
+\newcommand{\fraku}{\mathfrak{u}}
+\newcommand{\frakv}{\mathfrak{v}}
+\newcommand{\frakw}{\mathfrak{w}}
+\newcommand{\frakx}{\mathfrak{x}}
+\newcommand{\fraky}{\mathfrak{y}}
+\newcommand{\frakz}{\mathfrak{z}}
+
+%Greek shortcuts
+\newcommand{\veps}{\varepsilon}
+
+%Category names
+\DeclareMathOperator{\Max}{Max}
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\Ring}{\mathbf{Ring}}
+\DeclareMathOperator{\Group}{\mathbf{Group}}
+\DeclareMathOperator{\Bigebra}{\mathbf{Bigebra}}
+\DeclareMathOperator{\kFun}{{k \text{-}\mathbf{Fun}}}
+\DeclareMathOperator{\Field}{\mathbf{Field}}
+\DeclareMathOperator{\Scheme}{\mathbf{Scheme}}
+\DeclareMathOperator{\Vect}{\mathbf{Vect}}
+\DeclareMathOperator{\Alg}{\mathbf{Alg}}
+
+%Some common math operators
+\DeclareMathOperator{\uhp}{\mathcal{H}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Spf}{Spf}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Lie}{Lie}
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\jacobson}{\mathfrak J}
+\DeclareMathOperator{\nilradical}{\mathfrak N}
+\DeclareMathOperator{\Endo}{End}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\divv}{div}
+\DeclareMathOperator{\Divv}{Div}
+\DeclareMathOperator{\Disc}{Disc}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\PSL}{PSL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\GSpin}{GSpin}
+\DeclareMathOperator{\supp}{\text{supp}}
+\DeclareMathOperator{\chara}{\text{char}}
+\DeclareMathOperator{\sign}{\text{sign}}
+\DeclareMathOperator{\disc}{\text{disc}}
+\DeclareMathOperator{\Sh}{Sh}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Hdr}{H_{\text{dR}}}
+\DeclareMathOperator{\Res}{Res} 
+\DeclareMathOperator{\lngth}{length}
+\DeclareMathOperator{\Pet}{Pet}
+\DeclareMathOperator{\reg}{reg}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Meas}{Meas}
+\DeclareMathOperator{\cotimes}{\widehat{\otimes}}
+\DeclareMathOperator{\et}{et}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\cont}{\text{cont}}
+\newcommand{\doubleto}{%
+        \mathrel{\vcenter{\mathsurround0pt
+                \ialign{##\crcr
+                        \noalign{\nointerlineskip}$\rightarrow$\crcr
+                        %\noalign{\nointerlineskip}$\rightarrow$\crcr
+                        \noalign{\nointerlineskip}$\rightarrow$\crcr
+                }%
+        }}%
+}
+\newcommand*{\df}{\mathrel{\vcenter{\baselineskip0.5ex \lineskiplimit0pt
+                     \hbox{\scriptsize.}\hbox{\scriptsize.}}} =}
+\providecommand{\trans}[1]{\vphantom{#1}^{\intercal}\hspace{-0.5mm}#1}
+\newcommand{\verteq}{\rotatebox{90}{$\,=$}}
+\newcommand{\equalto}[2]{\underset{\scriptstyle\overset{\mkern4mu\verteq}{#2}}{#1}}
+
+
+%Some common abreviations
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+\providecommand{\pabs}[1]{\left\lvert#1\right\rvert_p}
+\providecommand{\twomat}[4]{\left(\begin{matrix}#1&#2\\#3&#4\end{matrix}\right)}
+\providecommand{\stwomat}[4]{\left(\begin{smallmatrix}#1&#2\\#3&#4\end{smallmatrix}\right)}
+\providecommand{\twovec}[2]{\left(\begin{matrix}#1\\#2\end{matrix}\right)}
+\providecommand{\stwovec}[2]{\left(\begin{smallmatrix}#1\\#2\end{smallmatrix}\right)}
+\providecommand{\pseries}[2]{#1[\![ #2 ]\!]}
+\providecommand{\demph}[1]{{\textsc{#1}}}
+
+%Sets, notations, etc.
+\newcommand{\Qp}{\mathbb{Q}_p}
+\newcommand{\Zp}{\mathbb{Z}_p}
+\newcommand{\Cp}{\mathbb{C}_p}
+\newcommand{\Fp}{\mathbb{F}_p}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\Qbar}{\overline{\mathbb{Q}}}
+\renewcommand{\AA}{\mathbb{A}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\DD}{\mathbb{D}}
+\newcommand{\KK}{\mathbb{K}}
+\newcommand{\adeles}{\mathbf{A}}
+\newcommand{\ideles}{\adeles^\times}
+
+\newcommand{\fixme}[1]{\footnote{#1}}
+
+\newcommand{\cVbar}{\overline{\cV}}
+\newcommand{\cUbar}{\overline{\cU}}
+\newcommand{\cObar}{\cO}
+\newcommand{\cWbar}{\overline{\cW}}
+\newcommand{\cSbar}{\overline{\cS}}
+\newcommand{\cEbar}{\overline{\cE}}
+\newcommand{\dblbs}{\backslash \hspace{-1.5mm}\backslash\hspace{-.5mm}}
+\newcommand{\dbls}{/ \hspace{-1.5mm}/\hspace{-.5mm}}
+
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\Re}{\operatorname{Re}}
+
+% shortcut to get to texttt
+\renewcommand{\tt}[1]{\texttt{#1}}
+
+\endinput

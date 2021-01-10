@@ -1,0 +1,65 @@
+
+#################################
+####    Account: Fastmail    ####
+#################################
+
+IMAPAccount fastmail
+Host imap.fastmail.com
+SSLType IMAPS
+SSLVersions TLSv1.2
+User deper29@fastmail.fm
+# # Fetch password from .netrc:
+# #PassCmd "sed -n -e 's,^machine work\\.host\\.com login tehuser password \\(.*\\),\\1,p' < $HOME/.netrc"
+# # Fetch password from a gpg-encrypted file:
+PassCmd "gpg --quiet --for-your-eyes-only --decrypt .isyncpassword.asc"
+# # Fetch password from pwmd (http://pwmd.sourceforge.net/):
+# #PassCmd "echo -ne 'GET myIsp\\tpassword' | pwmc datafile"
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+# The trailing "/" is important
+Path ~/.mail/fastmail/
+Inbox ~/.mail/fastmail/INBOX
+Flatten .
+
+Channel fastmail
+Master :fastmail-remote:
+Slave  :fastmail-local:
+Patterns "INBOX" "*"
+Expunge Both
+SyncState *
+Sync All
+Create Both
+
+
+#################################
+####     Account: Usask      ####
+#################################
+
+# IMAPAccount     usask
+# Host            outlook.office365.com
+# SSLType         IMAPS
+# Port 993
+# AuthMechs PLAIN
+# SSLVersions     TLSv1.2
+# User            dmp450@usask.ca
+# Pass            <REDACTED>
+# 
+# IMAPStore       usask-remote
+# Account         usask
+# 
+# MaildirStore    usask-local
+# Path            ~/.mail/usask/
+# Inbox           ~/.mail/usask/INBOX
+# Flatten .
+# 
+# Channel         usask
+# Master          :usask-remote:
+# Slave           :usask-local:
+# Patterns        "INBOX" "*"
+# Expunge         Both
+# SyncState *
+# Sync All
+# Create Both

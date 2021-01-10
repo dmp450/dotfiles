@@ -22,10 +22,6 @@ noremap <Leader>w :update<CR>
 vnoremap  <Leader>w :update<CR>
 inoremap <Leader>w :update<CR>
 
-" Quick quit command
-noremap <Leader>. :quit<CR> "Quit current window
-noremap <Leader>> :qa!<CR> "Quit all windows
-
 " Map sort function to a key
 vnoremap <Leader>s :sort<CR>
 
@@ -55,11 +51,6 @@ autocmd Filetype make setlocal ts=8 sw=8 noexpandtab
 
 "set funky syntax highlighting types
 autocmd BufNewFile,BufRead *.sage set syntax=python
-
-"swap the : and ; makes it easier to do : commands since we won't have to
-"press shift
-noremap ; :
-noremap : ;
 
 set autoindent
 set cindent

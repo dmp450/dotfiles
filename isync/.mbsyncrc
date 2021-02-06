@@ -38,28 +38,28 @@ Create Both
 ####     Account: Usask      ####
 #################################
 
-# IMAPAccount     usask
-# Host            outlook.office365.com
-# SSLType         IMAPS
-# Port 993
-# AuthMechs PLAIN
-# SSLVersions     TLSv1.2
-# User            dmp450@usask.ca
-# Pass            <REDACTED>
-# 
-# IMAPStore       usask-remote
-# Account         usask
-# 
-# MaildirStore    usask-local
-# Path            ~/.mail/usask/
-# Inbox           ~/.mail/usask/INBOX
-# Flatten .
-# 
-# Channel         usask
-# Master          :usask-remote:
-# Slave           :usask-local:
-# Patterns        "INBOX" "*"
-# Expunge         Both
-# SyncState *
-# Sync All
-# Create Both
+IMAPAccount     usask
+Host            outlook.office365.com
+SSLType         IMAPS
+Port 993
+AuthMechs       LOGIN
+SSLVersions     TLSv1.2
+User            dmp450@usask.ca
+Pass            <REDACTED>
+
+IMAPStore       usask-remote
+Account         usask
+
+MaildirStore    usask-local
+Path            ~/.mail/usask/
+Inbox           ~/.mail/usask/INBOX
+Flatten .
+
+Channel         usask
+Master          :usask-remote:
+Slave           :usask-local:
+Patterns        "INBOX" "*"
+Expunge         Both
+SyncState *
+Sync All
+Create Both

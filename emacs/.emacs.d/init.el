@@ -169,3 +169,13 @@
   (setq nlinum-relative-redisplay-delay 0)
   (global-nlinum-relative-mode))
 
+;; add support for markdown
+ (use-package markdown-mode
+  :ensure t
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown")) 
+
+(use-package ein
+  )

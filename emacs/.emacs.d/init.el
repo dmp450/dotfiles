@@ -175,13 +175,7 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-<<<<<<< HEAD
   :init (setq markdown-command "multimarkdown")) 
 
 (use-package ein
   )
-=======
-  :init (setq markdown-command "multimarkdown"))
-
-(use-package ein)
->>>>>>> b764edde3531d124d284282ba96ac346f7806db1

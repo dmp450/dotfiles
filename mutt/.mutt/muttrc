@@ -96,6 +96,7 @@ mailboxes =fastmail/Drafts
 mailboxes =fastmail/kijiji
 mailboxes =fastmail/Junk
 mailboxes =fastmail/Wedding
+mailboxes =fastmail/Trash
 
 
 # mailboxes =usask

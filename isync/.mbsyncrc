@@ -7,31 +7,26 @@ IMAPAccount fastmail
 Host imap.fastmail.com
 SSLType IMAPS
 SSLVersions TLSv1.2
-User deper29@fastmail.fm
-# # Fetch password from .netrc:
-# #PassCmd "sed -n -e 's,^machine work\\.host\\.com login tehuser password \\(.*\\),\\1,p' < $HOME/.netrc"
-# # Fetch password from a gpg-encrypted file:
-PassCmd "gpg --quiet --for-your-eyes-only --decrypt ~/.isyncpassword.asc"
-# # Fetch password from pwmd (http://pwmd.sourceforge.net/):
-# #PassCmd "echo -ne 'GET myIsp\\tpassword' | pwmc datafile"
+User            deper29@fastmail.fm
+PassCmd         "kwallet-query -f Mutt -r fastmail-imap kdewallet"
 
-IMAPStore fastmail-remote
-Account fastmail
+IMAPStore       fastmail-remote
+Account         fastmail
 
-MaildirStore fastmail-local
+MaildirStore    fastmail-local
 # The trailing "/" is important
-Path ~/.mail/fastmail/
-Inbox ~/.mail/fastmail/INBOX
-Flatten .
+Path            ~/.mail/fastmail/
+Inbox           ~/.mail/fastmail/INBOX
+Flatten         .
 
-Channel fastmail
-Far :fastmail-remote:
-Near  :fastmail-local:
-Patterns "INBOX" "*"
-Expunge Both
-SyncState *
-Sync All
-Create Both
+Channel         fastmail
+Far             :fastmail-remote:
+Near            :fastmail-local:
+Patterns        "INBOX" "*"
+Expunge         Both
+SyncState       *
+Sync            PullNew PullFlags Push
+Create          Both
 
 
 #################################
@@ -45,7 +40,7 @@ Port 993
 AuthMechs       LOGIN
 SSLVersions     TLSv1.2
 User            dmp450@usask.ca
-Pass            BUjinkan2
+PassCmd         "kwallet-query -f Mutt -r usask-imap kdewallet"
 
 IMAPStore       usask-remote
 Account         usask
@@ -53,13 +48,13 @@ Account         usask
 MaildirStore    usask-local
 Path            ~/.mail/usask/
 Inbox           ~/.mail/usask/INBOX
-Flatten .
+Flatten         .
 
 Channel         usask
-Far          :usask-remote:
-Near           :usask-local:
+Far             :usask-remote:
+Near            :usask-local:
 Patterns        "INBOX" "*"
 Expunge         Both
-SyncState *
-Sync All
-Create Both
+SyncState       *
+Sync            PullNew PullFlags Push
+Create          Both

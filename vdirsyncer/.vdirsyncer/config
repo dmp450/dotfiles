@@ -16,4 +16,4 @@ fileext = ".vcf"
 type = "carddav"
 url = "https://carddav.fastmail.com"
 username = "deper29@fastmail.fm"
-password.fetch = ["command", "~/.get-password.sh"]
+password.fetch = ["command", "secret-tool", "lookup", "fastmail", "carddav"]

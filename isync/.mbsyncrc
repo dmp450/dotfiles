@@ -8,7 +8,8 @@ Host imap.fastmail.com
 SSLType IMAPS
 SSLVersions TLSv1.2
 User            deper29@fastmail.fm
-PassCmd         "kwallet-query -f Mutt -r fastmail-imap kdewallet"
+# PassCmd         "kwallet-query -f Mutt -r fastmail-imap kdewallet"
+PassCmd         "secret-tool lookup fastmail imap"
 
 IMAPStore       fastmail-remote
 Account         fastmail
@@ -40,7 +41,8 @@ Port 993
 AuthMechs       LOGIN
 SSLVersions     TLSv1.2
 User            dmp450@usask.ca
-PassCmd         "kwallet-query -f Mutt -r usask-imap kdewallet"
+# PassCmd         "kwallet-query -f Mutt -r usask-imap kdewallet"
+PassCmd         "secret-tool lookup usask imap"
 
 IMAPStore       usask-remote
 Account         usask

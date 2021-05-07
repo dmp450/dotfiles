@@ -305,7 +305,7 @@
 
 
 %Some common abreviations
-\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
 \providecommand{\abs}[1]{\left\lvert#1\right\rvert}
 \providecommand{\pabs}[1]{\left\lvert#1\right\rvert_p}
 \providecommand{\twomat}[4]{\left(\begin{matrix}#1&#2\\#3&#4\end{matrix}\right)}
@@ -314,7 +314,13 @@
 \providecommand{\stwovec}[2]{\left(\begin{smallmatrix}#1\\#2\end{smallmatrix}\right)}
 \providecommand{\pseries}[2]{#1[\![ #2 ]\!]}
 \providecommand{\demph}[1]{{\textsc{#1}}}
+
+% These are "clean" ways of making sure the floor and ceil symbols match the
+% height of fractions. For standard floor/ceil, just use \floor \ceil. For
+% height matching, use \floor* and \ceil*
 \DeclarePairedDelimiter\round{\lfloor}{\rceil} % Round nearest integer
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 
 %Sets, notations, etc.
 \newcommand{\Qp}{\mathbb{Q}_p}

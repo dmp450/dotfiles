@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/deper29/.vim'
-let g:netrw_dirhist_2='/home/deper29/.mutt'
-let g:netrw_dirhist_3='/home/deper29/.mail/fastmail/Archive/cur'
-let g:netrw_dirhist_4='/home/deper29/.mutt'
-let g:netrw_dirhist_5='/home/deper29/.mail/usask'
-let g:netrw_dirhist_6='/home/deper29/dotfiles/mutt/.mutt/accounts'

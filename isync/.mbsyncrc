@@ -1,0 +1,60 @@
+
+#################################
+####    Account: Fastmail    ####
+#################################
+
+IMAPAccount fastmail
+Host imap.fastmail.com
+SSLType IMAPS
+SSLVersions TLSv1.2
+User            deper29@fastmail.fm
+PassCmd         "kwallet-query -f Mutt -r fastmail-imap kdewallet"
+
+IMAPStore       fastmail-remote
+Account         fastmail
+
+MaildirStore    fastmail-local
+# The trailing "/" is important
+Path            ~/.mail/fastmail/
+Inbox           ~/.mail/fastmail/INBOX
+Flatten         .
+
+Channel         fastmail
+Far             :fastmail-remote:
+Near            :fastmail-local:
+Patterns        "INBOX" "*"
+Expunge         Both
+SyncState       *
+Sync            PullNew PullFlags Push
+Create          Both
+
+
+#################################
+####     Account: Usask      ####
+#################################
+
+IMAPAccount     usask
+Host            outlook.office365.com
+SSLType         IMAPS
+Port 993
+AuthMechs       LOGIN
+SSLVersions     TLSv1.2
+User            dmp450@usask.ca
+PassCmd         "kwallet-query -f Mutt -r usask-imap kdewallet"
+
+IMAPStore       usask-remote
+Account         usask
+
+MaildirStore    usask-local
+Path            ~/.mail/usask/
+Inbox           ~/.mail/usask/INBOX
+Flatten         .
+
+Channel         usask
+Far             :usask-remote:
+Near            :usask-local:
+Patterns        "INBOX" "*"
+Expunge         Both
+SyncState       *
+Sync            PullNew PullFlags Push
+Create          Both

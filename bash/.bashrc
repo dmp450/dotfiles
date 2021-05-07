@@ -19,5 +19,6 @@ fi
 complete -cf sudo
 bind 'set match-hidden-files off'
 alias mutt=neomutt
+export BROWSER=firefox
 
 neofetch

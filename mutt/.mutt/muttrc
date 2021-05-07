@@ -77,19 +77,20 @@ unhdr_order *
 hdr_order from: to: cc: bcc: date: subject:
 alternative_order text/plain text/enriched text/html
 auto_view text/html
+auto_view application/pdf
+auto_view application/msword
 
 # sidebar patch config
 set sidebar_visible
 set sidebar_short_path
 set sidebar_folder_indent
-set sidebar_width = 25
-set sidebar_divider_char = ' | '
-set sidebar_indent_string = '  ''
+set sidebar_width = 20
+set sidebar_indent_string = '  '
 set sidebar_format = "%B %* [%?N?%N / ?%S]"
 set mail_check_stats
 
 # Mailboxes to show in the sidebar.
-# mailboxes =fastmail
+# mailboxes =fastmail/
 mailboxes =fastmail/INBOX 
 mailboxes =fastmail/Sent\ Items
 mailboxes =fastmail/Drafts
@@ -186,10 +187,11 @@ set editor="vim -c 'set syntax=mail ft=mail enc=utf-8'"
 # macro index <F8> "<shell-escape>mu find --clearlinks --format=links --linksdir=~/.mail/search " "mu find"
 # macro index <F9> "<change-folder-readonly>~/.mail/search" "mu find results"
 # 
-# # Use khard as an external address book
-# set query_command= "khard email --parsable '%s'"
-# bind editor <Tab> complete-query
-# bind editor ^T    complete
+# Use khard as an external address book
+set query_command= "khard email --parsable '%s'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+
 # 
 # # Some more bindings
 # bind index,pager g noop
@@ -216,8 +218,4 @@ set editor="vim -c 'set syntax=mail ft=mail enc=utf-8'"
 #     "add the sender email address to khard"
 # 
 # # ALIASES
-# 
-# # EXPERIMENTAL SIDEBAR SUPPORT
-# # set sidebar_visible=yes
-# # set sidebar_width=20
-# # mailboxes =INBOX =Drafts =Sent\ Items
+ macro index \Cf "<enter-command>unset wait_key<enter><shell-escape>read -p 'Enter a search term to find with notmuch: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<enter>" "show only messages matching a notmuch pattern"

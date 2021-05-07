@@ -1,5 +1,7 @@
 # HTML
-text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/html; $BROWSER %s
+text/html; w3m -I %{charset} -T text/html -dump; copiousoutput;
 text/plain; vim %s
 
-auto_view application/pdf
+application/pdf; pdftotext -layout %s -; copiousoutput;
+application/msword; antiword %s; copiousoutput;

@@ -177,5 +177,10 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown")) 
 
+;; This is to use Jupyter notebooks within Emacs. For more info, see
+;; https://github.com/millejoh/emacs-ipython-notebook
 (use-package ein
   )
+
+(use-package magit
+  :ensure t)

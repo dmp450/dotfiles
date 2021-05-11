@@ -184,3 +184,9 @@
 
 (use-package magit
   :ensure t)
+
+(use-package sage-shell-mode
+  :ensure t
+  :config
+  (add-hook 'sage-shell-mode-hook #'eldoc-mode)
+  (add-hook 'sage-shell:sage-mode-hook #'eldoc-mode))

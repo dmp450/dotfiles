@@ -94,3 +94,5 @@ hi! link CursorColumn	CursorLine
 hi! link NonText		LineNr
 
 " vim:set ts=4 sw=4 noet:
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE

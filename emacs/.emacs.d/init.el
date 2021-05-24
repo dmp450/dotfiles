@@ -58,18 +58,24 @@
 
 
 
-
+;; Experimental! Use Xah Fly Keys instead of evil mode.
+;; Disabled general.el, evil, and nlinum-relative.
+(use-package xah-fly-keys
+  :ensure t
+  :config
+  (xah-fly-keys-set-layout "dvorak")
+  (xah-fly-keys 1))
 
 ;; Additional packages and their configurations
 
 ;; Enable general.el. https://github.com/noctuid/general.el
-(use-package general
-  :config
-  (general-define-key
-   :states '(normal visual insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "TAB" '(other-window :which-key "prev buffer")))
+;; (use-package general
+;;   :config
+;;   (general-define-key
+;;    :states '(normal visual insert emacs)
+;;    :prefix "SPC"
+;;    :non-normal-prefix "C-SPC"
+;;    "TAB" '(other-window :which-key "prev buffer")))
  
 
 (use-package spacemacs-theme
@@ -82,12 +88,12 @@
   (setq spacemacs-theme-comment-italic t)
   (load-theme 'spacemacs-dark))
 
-(use-package evil
-  :init (evil-mode 1)
-  :config
-  (setq evil-emacs-state-modes nil)
-  (setq evil-insert-state-modes nil)
-  (setq evil-motion-state-modes nil))
+;; (use-package evil
+;;   :init (evil-mode 1)
+;;   :config
+;;   (setq evil-emacs-state-modes nil)
+;;   (setq evil-insert-state-modes nil)
+;;   (setq evil-motion-state-modes nil))
 
 ;; Enable which-key https://github.com/justbur/emacs-which-key
 (use-package which-key
@@ -103,22 +109,22 @@
 	  (t . ivy--regex-plus))))
 
 (use-package counsel
-  :init (counsel-mode 1)
-  :general
-  (:prefix "C-c"
-	   "f" '(:ignore t :which-key "files") 
-	   "b" 'ivy-switch-buffer ; Change buffer using ivy
-	   "ff" 'counsel-find-file
-	   "fr" 'counsel-recentf))
+  :init (counsel-mode 1))
+;;   :general
+;;   (:prefix "C-c"
+;; 	   "f" '(:ignore t :which-key "files")
+;; 	   "b" 'ivy-switch-buffer ; Change buffer using ivy
+;; 	   "ff" 'counsel-find-file
+;; 	   "fr" 'counsel-recentf))
 
 
 (use-package company
   :init
-  (global-company-mode t)
-  :general
-  (company-active-map
-  "C-n" 'company-select-next
-  "C-p" 'company-select-previous))
+  (global-company-mode t))
+  ;; :general
+  ;; (company-active-map
+  ;; "C-n" 'company-select-next
+  ;; "C-p" 'company-select-previous))
  
 ;; Enable the AUCTeX package https://www.gnu.org/software/auctex/manual/auctex.index.html
 ;; See also documentation for preview-latex
@@ -132,6 +138,7 @@
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex
   :config
+  (define-key cdlatex-mode-map "(" nil)
   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)) ; turn on CDLaTeX with AUCTex LaTeX mode.
 
 (use-package auctex-latexmk
@@ -152,6 +159,7 @@
 (use-package company-math
   :config
   (add-to-list 'company-backends 'company-math-symbols-unicode)
+  (setq-local company-backends (delete 'company-dabbrev company-backends))
   (defun my-latex-mode-setup ()
     (setq-local company-backends
 		(append '(company-math-symbols-latex company-latex-commands)
@@ -162,12 +170,12 @@
   :mode "\\*\\.go")
 
 ;; Set relative line numbers https://github.com/xcodebuild/nlinum-relative
-(use-package nlinum-relative
-  :config
-  (nlinum-relative-setup-evil)
-  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-  (setq nlinum-relative-redisplay-delay 0)
-  (global-nlinum-relative-mode))
+;; (use-package nlinum-relative
+;;   :config
+;;   (nlinum-relative-setup-evil)
+;;   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+;;   (setq nlinum-relative-redisplay-delay 0)
+;;   (global-nlinum-relative-mode))
 
 ;; add support for markdown
  (use-package markdown-mode
@@ -190,3 +198,15 @@
   :config
   (add-hook 'sage-shell-mode-hook #'eldoc-mode)
   (add-hook 'sage-shell:sage-mode-hook #'eldoc-mode))
+
+;; Configure rcirc
+(setq rcirc-server-alist
+      '(("irc.libera.chat" :port 6697 :encryption tls
+	 :channels ("##math" "##crypto")
+	 :nick "materialranger")))
+(add-hook 'rcirc-omit-mode
+	  (lambda ()
+	    ;; rcirc-omit-mode *always* toggles, so we disable it first
+	    ;; so it can toggle to being enabled.
+	    (setq rcirc-omit-mode nil)
+	    (rcirc-omit-mode)))

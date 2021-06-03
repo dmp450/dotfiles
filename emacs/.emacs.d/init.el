@@ -30,6 +30,10 @@
 ;; Highlight current line
 (global-hl-line-mode t)
 
+;; Enable global line number mode as per http://ergoemacs.org/emacs/emacs_line_number_mode.html
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+
 ;; Do not use 'init.el' for 'custom-*' code. Use 'custom.el'
 (setq custom-file "~/.emacs.d/custom-file.el")
 
@@ -138,7 +142,8 @@
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex
   :config
-  (define-key cdlatex-mode-map "(" nil)
+  ;; (define-key cdlatex-mode-map "(" nil)
+  (setq cdlatex-paired-parens "$[({")
   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)) ; turn on CDLaTeX with AUCTex LaTeX mode.
 
 (use-package auctex-latexmk

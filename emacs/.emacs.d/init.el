@@ -144,6 +144,22 @@
   :config
   ;; (define-key cdlatex-mode-map "(" nil)
   (setq cdlatex-paired-parens "$[({")
+  ;; Create some new environments
+  (setq cdlatex-env-alist
+	'(("axiom" "\\begin{axm}\n?\n\\end{axm}" nil)
+	  ("theorem" "\\begin{thm}\n?\n\\end{thm}" nil)
+	  ("definition" "\\begin{defn}\n?\n\\end{defn}" nil)
+	  ("remark" "\\begin{rmk}\n?\n\\end{rmk}" nil)
+	  ("corollary" "\\begin{cor}\n?\n\\end{cor}" nil)
+	  ("proposition" "\\begin{prop}\n?\n\\end{prop}" nil)))
+  ;; set some nice shortcuts for various environments
+  (setq cdlatex-command-alist
+	'(("axm" "Insert axiom env" "" cdlatex-environment ("axiom") t nil)
+	  ("thm" "Insert theorem env" "" cdlatex-environment ("theorem") t nil)
+	  ("defn" "Insert definition env" ""cdlatex-environment ("definition") t nil)
+	  ("rmk" "Insert remark environment" ""cdlatex-environment ("remark") t nil)
+	  ("cor" "Insert corollary environment" ""cdlatex-environment ("corollary") t nil)
+	  ("prop" "Insert proposition environment" ""cdlatex-environment ("proposition") t nil)))
   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)) ; turn on CDLaTeX with AUCTex LaTeX mode.
 
 (use-package auctex-latexmk

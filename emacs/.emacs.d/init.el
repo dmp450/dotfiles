@@ -30,6 +30,10 @@
 ;; Highlight current line
 (global-hl-line-mode t)
 
+;; Add some sane parentheses/brackets defaults globally.
+(electric-pair-mode 1)
+(show-paren-mode 1)
+
 ;; Enable global line number mode as per http://ergoemacs.org/emacs/emacs_line_number_mode.html
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
@@ -133,14 +137,17 @@
 ;; Enable the AUCTeX package https://www.gnu.org/software/auctex/manual/auctex.index.html
 ;; See also documentation for preview-latex
 ;; https://www.gnu.org/software/auctex/manual/preview-latex.index.html
-(use-package tex
+(use-package tex-site
   :straight auctex
   :config
-  (add-hook 'LaTeX-mode-hook 'reftex-mode)
-  (setq preview-auto-reveal t))
+  (setq TeX-master nil
+	TeX-auto-save t
+	preview-auto-reveal t)
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
 
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex
+  :after tex
   :config
   ;; (define-key cdlatex-mode-map "(" nil)
   (setq cdlatex-paired-parens "$[({")

@@ -8,9 +8,9 @@
 (setq ring-bell-function 'ignore)
 (setq delete-old-versions -1)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))) ; set a backups directory
+(setq tramp-default-method "ssh")
 (defalias 'yes-or-no-p 'y-or-n-p)	; change yes/no prompts to y/n
 ; (global-display-line-numbers-mode)
-
 
 ;; Start Emacs maximized
 (custom-set-variables
@@ -34,7 +34,8 @@
 (electric-pair-mode 1)
 (show-paren-mode 1)
 
-;; Enable global line number mode as per http://ergoemacs.org/emacs/emacs_line_number_mode.html
+;; Enable global line number mode as per
+;; http://ergoemacs.org/emacs/emacs_line_number_mode.html
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
 
@@ -48,7 +49,8 @@
 ;; Bootstrap code for straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+       user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -112,6 +114,7 @@
   :init (ivy-mode 1)
   :config
   (setq ivy-height 20)
+  (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
 	'((read-file-name-internal . ivy--regex-fuzzy) ; enable fuzzy searching
 	  (t . ivy--regex-plus))))
@@ -134,8 +137,9 @@
   ;; "C-n" 'company-select-next
   ;; "C-p" 'company-select-previous))
  
-;; Enable the AUCTeX package https://www.gnu.org/software/auctex/manual/auctex.index.html
-;; See also documentation for preview-latex
+;; Enable the AUCTeX package
+;; https://www.gnu.org/software/auctex/manual/auctex.index.html See also
+;; documentation for preview-latex
 ;; https://www.gnu.org/software/auctex/manual/preview-latex.index.html
 (use-package tex-site
   :straight auctex
@@ -143,7 +147,8 @@
   (setq TeX-master nil
 	TeX-auto-save t
 	preview-auto-reveal t)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+  (add-hook 'LaTeX-mode-hook 'turn-on-flyspell))
 
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex
@@ -238,3 +243,9 @@
 	    ;; so it can toggle to being enabled.
 	    (setq rcirc-omit-mode nil)
 	    (rcirc-omit-mode)))
+
+;; add support for power mode! https://github.com/elizagamedev/power-mode.el
+;; (use-package power-mode
+;;     :straight (power-mode :type git :host github :repo "elizagamedev/power-mode.el")
+;;     :init
+;;     (add-hook 'after-init-hook #'power-mode))

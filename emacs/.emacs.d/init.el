@@ -8,9 +8,9 @@
 (setq ring-bell-function 'ignore)
 (setq delete-old-versions -1)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))) ; set a backups directory
+(setq tramp-default-method "ssh")
 (defalias 'yes-or-no-p 'y-or-n-p)	; change yes/no prompts to y/n
 ; (global-display-line-numbers-mode)
-
 
 ;; Start Emacs maximized
 (custom-set-variables
@@ -30,6 +30,15 @@
 ;; Highlight current line
 (global-hl-line-mode t)
 
+;; Add some sane parentheses/brackets defaults globally.
+(electric-pair-mode 1)
+(show-paren-mode 1)
+
+;; Enable global line number mode as per
+;; http://ergoemacs.org/emacs/emacs_line_number_mode.html
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+
 ;; Do not use 'init.el' for 'custom-*' code. Use 'custom.el'
 (setq custom-file "~/.emacs.d/custom-file.el")
 
@@ -40,7 +49,8 @@
 ;; Bootstrap code for straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+       user-emacs-directory))
       (bootstrap-version 5))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -58,18 +68,24 @@
 
 
 
-
+;; Experimental! Use Xah Fly Keys instead of evil mode.
+;; Disabled general.el, evil, and nlinum-relative.
+(use-package xah-fly-keys
+  :ensure t
+  :config
+  (xah-fly-keys-set-layout "dvorak")
+  (xah-fly-keys 1))
 
 ;; Additional packages and their configurations
 
 ;; Enable general.el. https://github.com/noctuid/general.el
-(use-package general
-  :config
-  (general-define-key
-   :states '(normal visual insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-   "TAB" '(other-window :which-key "prev buffer")))
+;; (use-package general
+;;   :config
+;;   (general-define-key
+;;    :states '(normal visual insert emacs)
+;;    :prefix "SPC"
+;;    :non-normal-prefix "C-SPC"
+;;    "TAB" '(other-window :which-key "prev buffer")))
  
 
 (use-package spacemacs-theme
@@ -82,12 +98,12 @@
   (setq spacemacs-theme-comment-italic t)
   (load-theme 'spacemacs-dark))
 
-(use-package evil
-  :init (evil-mode 1)
-  :config
-  (setq evil-emacs-state-modes nil)
-  (setq evil-insert-state-modes nil)
-  (setq evil-motion-state-modes nil))
+;; (use-package evil
+;;   :init (evil-mode 1)
+;;   :config
+;;   (setq evil-emacs-state-modes nil)
+;;   (setq evil-insert-state-modes nil)
+;;   (setq evil-motion-state-modes nil))
 
 ;; Enable which-key https://github.com/justbur/emacs-which-key
 (use-package which-key
@@ -98,40 +114,64 @@
   :init (ivy-mode 1)
   :config
   (setq ivy-height 20)
+  (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
 	'((read-file-name-internal . ivy--regex-fuzzy) ; enable fuzzy searching
 	  (t . ivy--regex-plus))))
 
 (use-package counsel
-  :init (counsel-mode 1)
-  :general
-  (:prefix "C-c"
-	   "f" '(:ignore t :which-key "files") 
-	   "b" 'ivy-switch-buffer ; Change buffer using ivy
-	   "ff" 'counsel-find-file
-	   "fr" 'counsel-recentf))
+  :init (counsel-mode 1))
+;;   :general
+;;   (:prefix "C-c"
+;; 	   "f" '(:ignore t :which-key "files")
+;; 	   "b" 'ivy-switch-buffer ; Change buffer using ivy
+;; 	   "ff" 'counsel-find-file
+;; 	   "fr" 'counsel-recentf))
 
 
 (use-package company
   :init
-  (global-company-mode t)
-  :general
-  (company-active-map
-  "C-n" 'company-select-next
-  "C-p" 'company-select-previous))
+  (global-company-mode t))
+  ;; :general
+  ;; (company-active-map
+  ;; "C-n" 'company-select-next
+  ;; "C-p" 'company-select-previous))
  
-;; Enable the AUCTeX package https://www.gnu.org/software/auctex/manual/auctex.index.html
-;; See also documentation for preview-latex
+;; Enable the AUCTeX package
+;; https://www.gnu.org/software/auctex/manual/auctex.index.html See also
+;; documentation for preview-latex
 ;; https://www.gnu.org/software/auctex/manual/preview-latex.index.html
-(use-package tex
+(use-package tex-site
   :straight auctex
   :config
-  (add-hook 'LaTeX-mode-hook 'reftex-mode)
-  (setq preview-auto-reveal t))
+  (setq TeX-master nil
+	TeX-auto-save t
+	preview-auto-reveal t)
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+  (add-hook 'LaTeX-mode-hook 'turn-on-flyspell))
 
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex
+  :after tex
   :config
+  ;; (define-key cdlatex-mode-map "(" nil)
+  (setq cdlatex-paired-parens "$[({")
+  ;; Create some new environments
+  (setq cdlatex-env-alist
+	'(("axiom" "\\begin{axm}\n?\n\\end{axm}" nil)
+	  ("theorem" "\\begin{thm}\n?\n\\end{thm}" nil)
+	  ("definition" "\\begin{defn}\n?\n\\end{defn}" nil)
+	  ("remark" "\\begin{rmk}\n?\n\\end{rmk}" nil)
+	  ("corollary" "\\begin{cor}\n?\n\\end{cor}" nil)
+	  ("proposition" "\\begin{prop}\n?\n\\end{prop}" nil)))
+  ;; set some nice shortcuts for various environments
+  (setq cdlatex-command-alist
+	'(("axm" "Insert axiom env" "" cdlatex-environment ("axiom") t nil)
+	  ("thm" "Insert theorem env" "" cdlatex-environment ("theorem") t nil)
+	  ("defn" "Insert definition env" ""cdlatex-environment ("definition") t nil)
+	  ("rmk" "Insert remark environment" ""cdlatex-environment ("remark") t nil)
+	  ("cor" "Insert corollary environment" ""cdlatex-environment ("corollary") t nil)
+	  ("prop" "Insert proposition environment" ""cdlatex-environment ("proposition") t nil)))
   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)) ; turn on CDLaTeX with AUCTex LaTeX mode.
 
 (use-package auctex-latexmk
@@ -152,6 +192,7 @@
 (use-package company-math
   :config
   (add-to-list 'company-backends 'company-math-symbols-unicode)
+  (setq-local company-backends (delete 'company-dabbrev company-backends))
   (defun my-latex-mode-setup ()
     (setq-local company-backends
 		(append '(company-math-symbols-latex company-latex-commands)
@@ -162,12 +203,12 @@
   :mode "\\*\\.go")
 
 ;; Set relative line numbers https://github.com/xcodebuild/nlinum-relative
-(use-package nlinum-relative
-  :config
-  (nlinum-relative-setup-evil)
-  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-  (setq nlinum-relative-redisplay-delay 0)
-  (global-nlinum-relative-mode))
+;; (use-package nlinum-relative
+;;   :config
+;;   (nlinum-relative-setup-evil)
+;;   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+;;   (setq nlinum-relative-redisplay-delay 0)
+;;   (global-nlinum-relative-mode))
 
 ;; add support for markdown
  (use-package markdown-mode
@@ -190,3 +231,21 @@
   :config
   (add-hook 'sage-shell-mode-hook #'eldoc-mode)
   (add-hook 'sage-shell:sage-mode-hook #'eldoc-mode))
+
+;; Configure rcirc
+(setq rcirc-server-alist
+      '(("irc.libera.chat" :port 6697 :encryption tls
+	 :channels ("##math" "##crypto")
+	 :nick "materialranger")))
+(add-hook 'rcirc-omit-mode
+	  (lambda ()
+	    ;; rcirc-omit-mode *always* toggles, so we disable it first
+	    ;; so it can toggle to being enabled.
+	    (setq rcirc-omit-mode nil)
+	    (rcirc-omit-mode)))
+
+;; add support for power mode! https://github.com/elizagamedev/power-mode.el
+;; (use-package power-mode
+;;     :straight (power-mode :type git :host github :repo "elizagamedev/power-mode.el")
+;;     :init
+;;     (add-hook 'after-init-hook #'power-mode))

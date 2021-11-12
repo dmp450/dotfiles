@@ -224,7 +224,72 @@
   )
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'magit-mode-hook 'xah-fly-insert-mode-activate))
+
+;; My mail configuration
+;; TODO: When replying, change "sender writes" to "On $(date and time), sender wrote"
+;; TODO: Look at adding in folding perhaps?
+(use-package mu4e
+  :ensure t
+  :config
+  ;; Use mu4e for email in emacs
+  (setq mail-user-agent 'mu4e-user-agent)
+
+  ;; This stuff is the bare minimum needed for mu4e
+  (setq mu4e-sent-folder "/Sent Items"
+	mu4e-drafts-folder "/Drafts"
+	mu4e-trash-folder "/Trash")
+
+  ;; mail fetching options
+  (setq mu4e-get-mail-command "mbsync -a"
+	mu4e-update-interval 300
+	mu4e-index-cleanup nil
+	mu4e-index-lazy-check nil)
+
+  ;; sending mail configuration
+  (setq sendmail-program "/usr/bin/msmtp"
+	send-mail-function 'smtpmail-send-it
+	message-send-mail-function 'message-send-mail-with-sendmail
+	message-citation-line-format "\nOn %Y-%m-%d at %R %Z, %f wrote:\n"
+	message-citation-line-function 'message-insert-formatted-citation-line)
+
+  ;; My sender information
+  (setq user-mail-address "derek@derekperrin.com"
+	user-full-name "Derek Perrin"
+	mu4e-compose-signature-auto-include nil)
+
+  ;; Some maildir shortcuts
+  (setq mu4e-maildir-shortcuts
+	'( (:maildir "/Inbox"		:key ?i)
+	   (:maildir "/Drafts"		:key ?d)
+	   (:maildir "/Sent Items"	:key ?s)
+	   (:maildir "/Shopping.Amazon" :key ?a)
+	   (:maildir "/Shopping.kijiji" :key ?k)
+	   (:maildir "/Junk Mail"	:key ?j)
+	   (:maildir "/Trash"		:key ?t)))
+
+  ;; display customization
+  ;; custom thread headers found at https://mu-discuss.narkive.com/0A8jgd4g/fyi-nicer-threading-characters
+  (setq mu4e-headers-fields
+	'((:date		. 20)
+	  (:flags		. 6)
+	  (:from		. 30)
+	  (:thread-subject	. nil))
+	mu4e-headers-date-format "%Y.%m.%d %R"
+	mu4e-headers-thread-child-prefix '("├>" . "├─➤ ")
+	mu4e-headers-thread-last-child-prefix '("└>" . "└─➤ ")
+	mu4e-headers-thread-orphan-prefix '("┬>" . "┬─➤ ")
+	mu4e-headers-thread-single-orphan-prefix '("─>" . "──➤ ")
+	;; The following two should have the same width.
+	mu4e-headers-thread-connection-prefix '("│" . "│ ")
+	mu4e-headers-thread-blank-prefix '(" " . " ")
+	mu4e-use-fancy-chars t)
+  (setq message-kill-buffer-on-exit t)
+  
+  ;; disable command mode when starting mu4e
+  (add-hook 'mu4e-main-mode-hook 'xah-fly-insert-mode-activate))
 
 (use-package sage-shell-mode
   :ensure t

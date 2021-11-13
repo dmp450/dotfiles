@@ -250,6 +250,12 @@
 	mu4e-index-lazy-check t
 	mu4e-change-filenames-when-moving t)
 
+  ;; Set the 'd' key to move to trash instead of marking as trash.
+  ;; This prevents fastmail from destroying the message.
+  (fset 'my-move-to-trash "mt")
+  (define-key mu4e-headers-mode-map (kbd "d") 'my-move-to-trash)
+  (define-key mu4e-view-mode-map (kbd "d") 'my-move-to-trash)
+
   ;; sending mail configuration
   (setq sendmail-program "/usr/bin/msmtp"
 	send-mail-function 'smtpmail-send-it
@@ -277,7 +283,7 @@
   ;; custom thread headers found at https://mu-discuss.narkive.com/0A8jgd4g/fyi-nicer-threading-characters
   (setq mu4e-headers-fields
 	'((:date		. 20)
-	  (:flags		. 6)
+	  (:flags		. 10)
 	  (:from		. 30)
 	  (:thread-subject	. nil))
 	mu4e-headers-date-format "%Y.%m.%d %R"
@@ -288,9 +294,9 @@
 	;; The following two should have the same width.
 	mu4e-headers-thread-connection-prefix '("│" . "│ ")
 	mu4e-headers-thread-blank-prefix '(" " . " ")
+	mu4e-headers-unread-mark '("u" . "🖂")
 	mu4e-use-fancy-chars t)
   (setq message-kill-buffer-on-exit t)
-  
   ;; disable command mode when starting mu4e
   (add-hook 'mu4e-main-mode-hook 'xah-fly-insert-mode-activate))
 

@@ -94,14 +94,16 @@ set mail_check_stats
 mailboxes =fastmail/INBOX 
 mailboxes =fastmail/Sent\ Items
 mailboxes =fastmail/Drafts
+mailboxes =fastmail/Archive
 mailboxes =fastmail/Shopping
 mailboxes =fastmail/Shopping.Amazon
 mailboxes =fastmail/Shopping.kijiji
 mailboxes =fastmail/Trash
 
 
+
 # mailboxes =usask
-mailboxes =usask/INBOX =usask/Not\ Usask
+# mailboxes =usask/INBOX =usask/Not\ Usask
 # mailboxes =viu
 # mailboxes =viu/INBOX =viu/archive =viu/sent =viu/drafts =viu/junk =viu/trash
 # mailboxes =mf

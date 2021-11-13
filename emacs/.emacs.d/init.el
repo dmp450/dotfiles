@@ -229,7 +229,6 @@
   (add-hook 'magit-mode-hook 'xah-fly-insert-mode-activate))
 
 ;; My mail configuration
-;; TODO: When replying, change "sender writes" to "On $(date and time), sender wrote"
 ;; TODO: Look at adding in folding perhaps?
 (use-package mu4e
   :ensure t
@@ -240,13 +239,15 @@
   ;; This stuff is the bare minimum needed for mu4e
   (setq mu4e-sent-folder "/Sent Items"
 	mu4e-drafts-folder "/Drafts"
-	mu4e-trash-folder "/Trash")
+	mu4e-trash-folder "/Trash"
+	mu4e-refile-folder "/Archive")
 
   ;; mail fetching options
   (setq mu4e-get-mail-command "mbsync -a"
 	mu4e-update-interval 300
 	mu4e-index-cleanup nil
-	mu4e-index-lazy-check nil)
+	mu4e-index-lazy-check t
+	mu4e-change-filenames-when-moving t)
 
   ;; sending mail configuration
   (setq sendmail-program "/usr/bin/msmtp"
@@ -262,10 +263,11 @@
 
   ;; Some maildir shortcuts
   (setq mu4e-maildir-shortcuts
-	'( (:maildir "/Inbox"		:key ?i)
+	'( (:maildir "/INBOX"		:key ?i)
 	   (:maildir "/Drafts"		:key ?d)
 	   (:maildir "/Sent Items"	:key ?s)
-	   (:maildir "/Shopping.Amazon" :key ?a)
+	   (:maildir "/Archive"         :key ?a)
+	   (:maildir "/Shopping.Amazon" :key ?A)
 	   (:maildir "/Shopping.kijiji" :key ?k)
 	   (:maildir "/Junk Mail"	:key ?j)
 	   (:maildir "/Trash"		:key ?t)))

@@ -105,6 +105,9 @@
 ;;   (setq evil-insert-state-modes nil)
 ;;   (setq evil-motion-state-modes nil))
 
+(use-package org
+  :demand t:)
+
 ;; Enable which-key https://github.com/justbur/emacs-which-key
 (use-package which-key
   :init (which-key-mode 1))
@@ -348,6 +351,10 @@
 ;;     :init
 ;;     (add-hook 'after-init-hook #'power-mode))
 
+(use-package slime
+  :ensure t
+  :config
+  (setq inferior-lisp-program "sbcl"))
 
 (use-package web-mode
   :mode
@@ -378,5 +385,4 @@
                      unless (string-match-p "^[a-z-]" (cdr pair))
                      collect (cons (car pair)
                                    (string-trim-right (cdr pair)
-                                                      "\\(?:>\\|]\\|}\\)+\\'")))))
-  )
+                                                      "\\(?:>\\|]\\|}\\)+\\'"))))))

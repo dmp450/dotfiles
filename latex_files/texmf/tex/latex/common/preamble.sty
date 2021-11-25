@@ -41,27 +41,33 @@
 \renewcommand{\tt}[1]{\texttt{#1}}
 
 %% Define theorem styles
-\theoremstyle{plain}
-\newtheorem{thm}{Theorem}[chapter]
-\newtheorem{lem}[thm]{Lemma}
-\newtheorem{prop}[thm]{Proposition}
-\newtheorem{cor}[thm]{Corollary}
-\newtheorem{conj}[thm]{Conjecture}
-\newtheorem{ex}[thm]{Exercise}
+%% NOTE: These are currently commented out because having them in here seems to
+%% break beamer. It's due to theorem environments being redefined or something.
+%% Solution is to put these into some other preamble specifically for documents,
+%% or to figure out some sort of conditional for removing it when creating
+%% beamer presentations.
 
-\theoremstyle{definition}
-\newtheorem{defn}[thm]{Definition}
-\newtheorem{eg}[thm]{Example}
-\newtheorem{claim}[thm]{Claim}
-\newtheorem{fact}[thm]{Fact}
-\newtheorem{axm}[thm]{Axiom}
+% \theoremstyle{plain}
+% \newtheorem{thm}{Theorem}[chapter]
+% \newtheorem{lem}[thm]{Lemma}
+% \newtheorem{prop}[thm]{Proposition}
+% \newtheorem{cor}[thm]{Corollary}
+% \newtheorem{conj}[thm]{Conjecture}
+% \newtheorem{ex}[thm]{Exercise}
 
-\theoremstyle{remark}
-\newtheorem{rmk}[thm]{Remark}
-\newtheorem{recall}[thm]{Recall}
+% \theoremstyle{definition}
+% \newtheorem{defn}[thm]{Definition}
+% \newtheorem{eg}[thm]{Example}
+% \newtheorem{claim}[thm]{Claim}
+% \newtheorem{fact}[thm]{Fact}
+% \newtheorem{axm}[thm]{Axiom}
 
-\newenvironment{pf}{\begin{proof}\small}{\end{proof}}
-\newenvironment{soln}{\begin{proof}[Solution.] \small}{\end{proof}}
+% \theoremstyle{remark}
+% \newtheorem{rmk}[thm]{Remark}
+% \newtheorem{recall}[thm]{Recall}
+
+% \newenvironment{pf}{\begin{proof}\small}{\end{proof}}
+% \newenvironment{soln}{\begin{proof}[Solution.] \small}{\end{proof}}
 
 %Caligraphic 
 \newcommand{\cA}{\mathcal{A}}

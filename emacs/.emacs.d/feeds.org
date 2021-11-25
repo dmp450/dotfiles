@@ -1,0 +1,8 @@
+* Feeds                                                              :elfeed:
+** Blogs                                                              :blogs:
+*** https://soatok.blog/feed                                         :crypto:
+*** https://thrakablog.thrakazog.com/feed/posts/default
+*** https://terrytao.wordpress.com/feed/                               :math:
+*** https://ellipticnews.wordpress.com/feed/                    :math:crypto:
+** Technology                                                          :tech:
+*** https://news.ycombinator.com/rss

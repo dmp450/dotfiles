@@ -105,6 +105,9 @@
 ;;   (setq evil-insert-state-modes nil)
 ;;   (setq evil-motion-state-modes nil))
 
+(use-package org
+  :demand t:)
+
 ;; Enable which-key https://github.com/justbur/emacs-which-key
 (use-package which-key
   :init (which-key-mode 1))
@@ -146,7 +149,8 @@
   :config
   (setq TeX-master nil
 	TeX-auto-save t
-	preview-auto-reveal t)
+	preview-auto-reveal t
+	reftex-plug-into-AUCTeX t)
   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
   (add-hook 'LaTeX-mode-hook 'turn-on-flyspell))
 
@@ -224,7 +228,104 @@
   )
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'magit-mode-hook 'xah-fly-insert-mode-activate))
+
+(use-package elfeed
+  :ensure t
+  :config
+  ;; Star and unstar articles
+  ;; http://pragmaticemacs.com/emacs/star-and-unstar-articles-in-elfeed/
+  (defalias 'elfeed-toggle-star
+    (elfeed-expose #'elfeed-search-toggle-all 'star))
+
+  (eval-after-load 'elfeed-search
+    '(define-key elfeed-search-mode-map (kbd "m") 'elfeed-toggle-star))
+
+  (defface elfeed-search-starred-title-face
+    '((t :foreground "#f77"))
+    "Marks a starred Elfeed entry.")
+
+  (push '(starred elfeed-search-starred-title-face) elfeed-search-face-alist))
+
+(use-package elfeed-org
+  :ensure t
+  :config
+  (elfeed-org)
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/feeds.org")))
+
+
+;; My mail configuration
+;; TODO: Look at adding in folding perhaps?
+(use-package mu4e
+  :ensure t
+  :config
+  ;; Use mu4e for email in emacs
+  (setq mail-user-agent 'mu4e-user-agent)
+
+  ;; This stuff is the bare minimum needed for mu4e
+  (setq mu4e-sent-folder "/Sent Items"
+	mu4e-drafts-folder "/Drafts"
+	mu4e-trash-folder "/Trash"
+	mu4e-refile-folder "/Archive")
+
+  ;; mail fetching options
+  (setq mu4e-get-mail-command "mbsync -a"
+	mu4e-update-interval 300
+	mu4e-index-cleanup nil
+	mu4e-index-lazy-check t
+	mu4e-change-filenames-when-moving t)
+
+  ;; Set the 'd' key to move to trash instead of marking as trash.
+  ;; This prevents fastmail from destroying the message.
+  (fset 'my-move-to-trash "mt")
+  (define-key mu4e-headers-mode-map (kbd "d") 'my-move-to-trash)
+  (define-key mu4e-view-mode-map (kbd "d") 'my-move-to-trash)
+
+  ;; sending mail configuration
+  (setq sendmail-program "/usr/bin/msmtp"
+	send-mail-function 'smtpmail-send-it
+	message-send-mail-function 'message-send-mail-with-sendmail
+	message-citation-line-format "\nOn %Y-%m-%d at %R %Z, %f wrote:\n"
+	message-citation-line-function 'message-insert-formatted-citation-line)
+
+  ;; My sender information
+  (setq user-mail-address "derek@derekperrin.com"
+	user-full-name "Derek Perrin"
+	mu4e-compose-signature-auto-include nil)
+
+  ;; Some maildir shortcuts
+  (setq mu4e-maildir-shortcuts
+	'( (:maildir "/INBOX"		:key ?i)
+	   (:maildir "/Drafts"		:key ?d)
+	   (:maildir "/Sent Items"	:key ?s)
+	   (:maildir "/Archive"         :key ?a)
+	   (:maildir "/Shopping.Amazon" :key ?A)
+	   (:maildir "/Shopping.kijiji" :key ?k)
+	   (:maildir "/Junk Mail"	:key ?j)
+	   (:maildir "/Trash"		:key ?t)))
+
+  ;; display customization
+  ;; custom thread headers found at https://mu-discuss.narkive.com/0A8jgd4g/fyi-nicer-threading-characters
+  (setq mu4e-headers-fields
+	'((:date		. 20)
+	  (:flags		. 10)
+	  (:from		. 30)
+	  (:thread-subject	. nil))
+	mu4e-headers-date-format "%Y.%m.%d %R"
+	mu4e-headers-thread-child-prefix '("├>" . "├─➤ ")
+	mu4e-headers-thread-last-child-prefix '("└>" . "└─➤ ")
+	mu4e-headers-thread-orphan-prefix '("┬>" . "┬─➤ ")
+	mu4e-headers-thread-single-orphan-prefix '("─>" . "──➤ ")
+	;; The following two should have the same width.
+	mu4e-headers-thread-connection-prefix '("│" . "│ ")
+	mu4e-headers-thread-blank-prefix '(" " . " ")
+	mu4e-headers-unread-mark '("u" . "🖂")
+	mu4e-use-fancy-chars t)
+  (setq message-kill-buffer-on-exit t)
+  ;; disable command mode when starting mu4e
+  (add-hook 'mu4e-main-mode-hook 'xah-fly-insert-mode-activate))
 
 (use-package sage-shell-mode
   :ensure t
@@ -249,3 +350,39 @@
 ;;     :straight (power-mode :type git :host github :repo "elizagamedev/power-mode.el")
 ;;     :init
 ;;     (add-hook 'after-init-hook #'power-mode))
+
+(use-package slime
+  :ensure t
+  :config
+  (setq inferior-lisp-program "sbcl"))
+
+(use-package web-mode
+  :mode
+  (
+   ".twig$"
+   ".html?$"
+   ".hbs$"
+   ".vue$"
+   ".blade.php$"
+   )
+  :config
+  (setq
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-style-padding 2
+   web-mode-script-padding 2
+   web-mode-enable-auto-closing t
+   web-mode-enable-auto-opening t
+   web-mode-enable-auto-pairing t
+   web-mode-enable-auto-indentation t)
+
+  ;; Let smartparens handle auto closing brackets, e.g. {{ }} or {% %}
+  ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/web/%2Bhtml.el#L56
+  (dolist (alist web-mode-engines-auto-pairs)
+    (setcdr alist
+            (cl-loop for pair in (cdr alist)
+                     unless (string-match-p "^[a-z-]" (cdr pair))
+                     collect (cons (car pair)
+                                   (string-trim-right (cdr pair)
+                                                      "\\(?:>\\|]\\|}\\)+\\'"))))))

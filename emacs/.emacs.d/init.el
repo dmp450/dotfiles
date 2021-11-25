@@ -66,8 +66,6 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-
-
 ;; Experimental! Use Xah Fly Keys instead of evil mode.
 ;; Disabled general.el, evil, and nlinum-relative.
 (use-package xah-fly-keys
@@ -355,6 +353,29 @@
   :ensure t
   :config
   (setq inferior-lisp-program "sbcl"))
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
+  (setq web-mode-attr-value-indent-offset 2)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
 
 (use-package web-mode
   :mode

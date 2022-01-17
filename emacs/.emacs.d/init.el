@@ -178,11 +178,6 @@
 	  ("prop" "Insert proposition environment" ""cdlatex-environment ("proposition") t nil)))
   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)) ; turn on CDLaTeX with AUCTex LaTeX mode.
 
-(use-package auctex-latexmk
-  :init (auctex-latexmk-setup)
-  :config
-  (setq-default TeX-master nil))
-
 (use-package latex-preview-pane
   :init (latex-preview-pane-enable)
   :config

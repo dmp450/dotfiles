@@ -87,7 +87,6 @@
 ;;    :non-normal-prefix "C-SPC"
 ;;    "TAB" '(other-window :which-key "prev buffer")))
  
-
 (use-package spacemacs-theme
   :no-require t
   :config
@@ -97,13 +96,6 @@
   
   (setq spacemacs-theme-comment-italic t)
   (load-theme 'spacemacs-dark))
-
-;; (use-package evil
-;;   :init (evil-mode 1)
-;;   :config
-;;   (setq evil-emacs-state-modes nil)
-;;   (setq evil-insert-state-modes nil)
-;;   (setq evil-motion-state-modes nil))
 
 (use-package org
   :demand t:)
@@ -130,7 +122,6 @@
 ;; 	   "b" 'ivy-switch-buffer ; Change buffer using ivy
 ;; 	   "ff" 'counsel-find-file
 ;; 	   "fr" 'counsel-recentf))
-
 
 (use-package company
   :init

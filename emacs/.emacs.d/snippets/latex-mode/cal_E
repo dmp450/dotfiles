@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Derek Perrin <derek@derekperrin.com>
+# name: cal_E
+# key: cE
+# --
+\mathcal{E}

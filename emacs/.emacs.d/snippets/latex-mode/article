@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Derek Perrin <derek@derekperrin.com>
+# name: article
+# key: article
+# --
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[singlespacing]{setspace}
+\usepackage[left=2.5cm,top=2.5cm,right=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+
+\title{${1:Title}}
+\author{${2:Derek Perrin}}
+
+\begin{document}
+\maketitle
+
+$0
+
+\end{document}

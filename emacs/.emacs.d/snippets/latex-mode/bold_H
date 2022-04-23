@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Derek Perrin <derek@derekperrin.com>
+# name: bold_H
+# key: HH
+# --
+\mathbb{H}

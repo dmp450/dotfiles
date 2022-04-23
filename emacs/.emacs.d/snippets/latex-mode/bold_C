@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Derek Perrin <derek@derekperrin.com>
+# name: bold_C
+# key: CC
+# --
+\mathbb{C}

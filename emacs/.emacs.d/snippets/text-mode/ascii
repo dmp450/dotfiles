@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: foo
+# key: foo
+# --
+`(save-excursion (backward-sexp)(kill-sexp))`Here is some text that will be inserted.

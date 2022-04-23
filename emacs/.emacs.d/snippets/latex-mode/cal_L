@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Derek Perrin <derek@derekperrin.com>
+# name: cal_L
+# key: cL
+# --
+\mathcal{L}

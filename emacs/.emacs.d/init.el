@@ -130,20 +130,39 @@
   ;; (company-active-map
   ;; "C-n" 'company-select-next
   ;; "C-p" 'company-select-previous))
- 
+
+(use-package yasnippet
+  :ensure t
+  :hook (LaTeX-mode . yas-minor-mode)
+  :config
+  (setq yas-new-snippet-default
+	 "# -*- mode: snippet -*-
+# contributor: Derek Perrin <derek@derekperrin.com>
+# name: $1
+# key: ${2:${1:$(yas--key-from-desc yas-text)}}
+# --
+$0`(yas-escape-text yas-selected-text)`")
+  (setq yas-triggers-in-field t))
+
 ;; Enable the AUCTeX package
 ;; https://www.gnu.org/software/auctex/manual/auctex.index.html See also
 ;; documentation for preview-latex
 ;; https://www.gnu.org/software/auctex/manual/preview-latex.index.html
 (use-package tex-site
   :straight auctex
+  :hook ((LaTeX-mode . prettify-symbols-mode)
+	 (LaTeX-mode . reftex-mode)
+	 (LaTeX-mode . flyspell-mode))
   :config
   (setq TeX-master nil
 	TeX-auto-save t
 	preview-auto-reveal t
 	reftex-plug-into-AUCTeX t)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (add-hook 'LaTeX-mode-hook 'turn-on-flyspell))
+  (add-hook 'LaTeX-mode-hook
+	    (defun preview-larger-previews ()
+	      (setq preview-scale-function
+		    (lambda () (* 1.5
+				  (funcall (preview-scale-from-face))))))))
 
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex

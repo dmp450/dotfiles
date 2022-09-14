@@ -104,32 +104,58 @@
 (use-package which-key
   :init (which-key-mode 1))
 
-;; Enable ivy, counsel, and swiper https://github.com/abo-abo/swiper
-(use-package ivy
-  :init (ivy-mode 1)
+(use-package vertico
+  :straight (vertico :files (:defaults "extensions/*")
+		     :includes (vertico-indexed vertico-flat
+				vertico-grid vertico-mouse
+				vertico-buffer vertico-quick
+				vertico-repeat vertico-reverse
+				vertico-directory
+				vertico-multiform
+				vertico-unobstrusive ))
+  :custom
+  (vertico-cycle t)
   :config
-  (setq ivy-height 20)
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-re-builders-alist
-	'((read-file-name-internal . ivy--regex-fuzzy) ; enable fuzzy searching
-	  (t . ivy--regex-plus))))
+  (vertico-mode)
+  (vertico-multiform-mode))
 
-(use-package counsel
-  :init (counsel-mode 1))
-;;   :general
-;;   (:prefix "C-c"
-;; 	   "f" '(:ignore t :which-key "files")
-;; 	   "b" 'ivy-switch-buffer ; Change buffer using ivy
-;; 	   "ff" 'counsel-find-file
-;; 	   "fr" 'counsel-recentf))
+(use-package vertico-directory
+  :after vertico
+  :bind (:map vertico-map
+	      ("RET" . vertico-directory-enter)
+	      ("DEL" . vertico-directory-delete-char)
+	      ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
-(use-package company
+(use-package marginalia
+  :after vertico
+  :ensure t
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  (marginalia-align 'center)
   :init
-  (global-company-mode t))
-  ;; :general
-  ;; (company-active-map
-  ;; "C-n" 'company-select-next
-  ;; "C-p" 'company-select-previous))
+  (marginalia-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(basic orderless))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package corfu
+  :ensure t
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  :bind
+  (:map corfu-map
+	("TAB" . corfu-next)
+	([tab] . corfu-next)
+	("S-TAB" . corfu-previous)
+	([backtab] . corfu-previous))
+  :init
+  (global-corfu-mode))
 
 (use-package yasnippet
   :ensure t

@@ -9,7 +9,10 @@
 (setq delete-old-versions -1)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))) ; set a backups directory
 (setq tramp-default-method "ssh")
+(setq vc-follow-symlinks nil)
 (defalias 'yes-or-no-p 'y-or-n-p)	; change yes/no prompts to y/n
+(add-to-list 'exec-path "/home/dperrin/.bin")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 ; (global-display-line-numbers-mode)
 
 ;; Start Emacs maximized
@@ -89,12 +92,12 @@
  
 (use-package spacemacs-theme
   :no-require t
-  :config
+  :custom
   ;; Don't use a different background color for comments  
-  (setq spacemacs-theme-comment-bg nil)
+  (spacemacs-theme-comment-bg nil)
   ;; Italicize comments
-  
-  (setq spacemacs-theme-comment-italic t)
+  (spacemacs-theme-comment-italic t)
+  :config
   (load-theme 'spacemacs-dark))
 
 (use-package org
@@ -178,12 +181,14 @@ $0`(yas-escape-text yas-selected-text)`")
   :straight auctex
   :hook ((LaTeX-mode . prettify-symbols-mode)
 	 (LaTeX-mode . reftex-mode)
+	 (LaTeX-mode . outline-minor-mode)
 	 (LaTeX-mode . flyspell-mode))
+  :custom
+  (TeX-master nil)
+  (TeX-auto-save t)
+  (preview-auto-reveal t)
+  (reftex-plug-into-AUCTeX t)
   :config
-  (setq TeX-master nil
-	TeX-auto-save t
-	preview-auto-reveal t
-	reftex-plug-into-AUCTeX t)
   (add-hook 'LaTeX-mode-hook
 	    (defun preview-larger-previews ()
 	      (setq preview-scale-function
@@ -193,11 +198,10 @@ $0`(yas-escape-text yas-selected-text)`")
 ;; Enable the cdlatex minor mode https://staff.fnwi.uva.nl/c.dominik/Tools/cdlatex/
 (use-package cdlatex
   :after tex
-  :config
-  ;; (define-key cdlatex-mode-map "(" nil)
-  (setq cdlatex-paired-parens "$[({")
+  :custom
+  (cdlatex-paired-parens "$[({")
   ;; Create some new environments
-  (setq cdlatex-env-alist
+  (cdlatex-env-alist
 	'(("axiom" "\\begin{axm}\n?\n\\end{axm}" nil)
 	  ("theorem" "\\begin{thm}\n?\n\\end{thm}" nil)
 	  ("definition" "\\begin{defn}\n?\n\\end{defn}" nil)
@@ -205,19 +209,21 @@ $0`(yas-escape-text yas-selected-text)`")
 	  ("corollary" "\\begin{cor}\n?\n\\end{cor}" nil)
 	  ("proposition" "\\begin{prop}\n?\n\\end{prop}" nil)))
   ;; set some nice shortcuts for various environments
-  (setq cdlatex-command-alist
+  (cdlatex-command-alist
 	'(("axm" "Insert axiom env" "" cdlatex-environment ("axiom") t nil)
 	  ("thm" "Insert theorem env" "" cdlatex-environment ("theorem") t nil)
 	  ("defn" "Insert definition env" ""cdlatex-environment ("definition") t nil)
 	  ("rmk" "Insert remark environment" ""cdlatex-environment ("remark") t nil)
 	  ("cor" "Insert corollary environment" ""cdlatex-environment ("corollary") t nil)
 	  ("prop" "Insert proposition environment" ""cdlatex-environment ("proposition") t nil)))
+  :config
+  ;; (define-key cdlatex-mode-map "(" nil)
   (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)) ; turn on CDLaTeX with AUCTex LaTeX mode.
 
 (use-package latex-preview-pane
   :init (latex-preview-pane-enable)
-  :config
-  (setq latex-preview-pane-multifile-mode 'auctex))
+  :custom
+  (latex-preview-pane-multifile-mode 'auctex))
 
 ;; Enable company-math for autocompletion with TeX symbols
 ;; https://github.com/vspinu/company-math If on Ubuntu, install
@@ -255,8 +261,7 @@ $0`(yas-escape-text yas-selected-text)`")
 
 ;; This is to use Jupyter notebooks within Emacs. For more info, see
 ;; https://github.com/millejoh/emacs-ipython-notebook
-(use-package ein
-  )
+(use-package ein)
 
 (use-package magit
   :ensure t
@@ -282,9 +287,10 @@ $0`(yas-escape-text yas-selected-text)`")
 
 (use-package elfeed-org
   :ensure t
+  :custom
+  (rmh-elfeed-org-files (list "~/.emacs.d/feeds.org"))
   :config
-  (elfeed-org)
-  (setq rmh-elfeed-org-files (list "~/.emacs.d/feeds.org")))
+  (elfeed-org))
 
 
 ;; My mail configuration
@@ -294,12 +300,6 @@ $0`(yas-escape-text yas-selected-text)`")
   :config
   ;; Use mu4e for email in emacs
   (setq mail-user-agent 'mu4e-user-agent)
-
-  ;; This stuff is the bare minimum needed for mu4e
-  (setq mu4e-sent-folder "/Sent Items"
-	mu4e-drafts-folder "/Drafts"
-	mu4e-trash-folder "/Trash"
-	mu4e-refile-folder "/Archive")
 
   ;; mail fetching options
   (setq mu4e-get-mail-command "mbsync -a"
@@ -311,8 +311,8 @@ $0`(yas-escape-text yas-selected-text)`")
   ;; Set the 'd' key to move to trash instead of marking as trash.
   ;; This prevents fastmail from destroying the message.
   (fset 'my-move-to-trash "mt")
-  (define-key mu4e-headers-mode-map (kbd "d") 'my-move-to-trash)
-  (define-key mu4e-view-mode-map (kbd "d") 'my-move-to-trash)
+  (define-key mu4e-headers-mode-map (kbd "k") 'my-move-to-trash)
+  (define-key mu4e-view-mode-map (kbd "k") 'my-move-to-trash)
 
   ;; sending mail configuration
   (setq sendmail-program "/usr/bin/msmtp"
@@ -321,21 +321,48 @@ $0`(yas-escape-text yas-selected-text)`")
 	message-citation-line-format "\nOn %Y-%m-%d at %R %Z, %f wrote:\n"
 	message-citation-line-function 'message-insert-formatted-citation-line)
 
-  ;; My sender information
-  (setq user-mail-address "derek@derekperrin.com"
-	user-full-name "Derek Perrin"
-	mu4e-compose-signature-auto-include nil)
-
+  (setq mu4e-contexts
+	`(,(make-mu4e-context
+	    :name "Personal"
+	    :match-func (lambda (msg)
+			  (when msg
+			    (string-prefix-p "/fastmail" (mu4e-message-field msg :maildir))))
+	    :vars '(
+		    (user-full-name . "Derek Perrin")
+		    (user-mail-address . "derek@derekperrin.com")
+		    (mu4e-sent-folder . "/fastmail/Sent Items")
+		    (mu4e-drafts-folder . "/fastmail/Drafts")
+		    (mu4e-trash-folder . "/fastmail/Trash")
+		    (mu4e-refile-folder . "/fastmail/Archive")
+		    (mu4e-sent-messages-behavior . sent)
+		    (mu4e-compose-signature-auto-include nil)))
+	  ,(make-mu4e-context
+	    :name "School"
+	    :match-func (lambda (msg)
+			  (when msg
+			    (string-prefix-p "/uclive" (mu4e-message-field msg :maildir))))
+	    :vars '(
+		    (user-full-name . "Derek Perrin")
+		    (user-mail-address . "derek.perrin@pg.canterbury.ac.nz")
+		    (mu4e-sent-folder . "/uclive/Sent Items")
+		    (mu4e-drafts-folder . "/uclive/Drafts")
+		    (mu4e-trash-folder . "/uclive/Deleted Items")
+		    (mu4e-refile-folder . "/uclive/Archive")
+		    (mu4e-sent-messages-behavior . sent)
+		    (mu4e-compose-signature-auto-include nil)))
+	  ))
+  (setq mu4e-context-policy 'pick-first)
+  
   ;; Some maildir shortcuts
   (setq mu4e-maildir-shortcuts
-	'( (:maildir "/INBOX"		:key ?i)
-	   (:maildir "/Drafts"		:key ?d)
-	   (:maildir "/Sent Items"	:key ?s)
-	   (:maildir "/Archive"         :key ?a)
-	   (:maildir "/Shopping.Amazon" :key ?A)
-	   (:maildir "/Shopping.kijiji" :key ?k)
-	   (:maildir "/Junk Mail"	:key ?j)
-	   (:maildir "/Trash"		:key ?t)))
+	'( (:maildir "/fastmail/INBOX"		:key ?i)
+	   (:maildir "/uclive/INBOX"            :key ?I)
+	   (:maildir "/uclive/Archive"           :key ?A)
+	   (:maildir "/fastmail/Drafts"		:key ?d)
+	   (:maildir "/fastmail/Sent Items"	:key ?s)
+	   (:maildir "/fastmail/Archive"         :key ?a)
+	   (:maildir "/fastmail/Junk Mail"	:key ?j)
+	   (:maildir "/fastmail/Trash"		:key ?t)))
 
   ;; display customization
   ;; custom thread headers found at https://mu-discuss.narkive.com/0A8jgd4g/fyi-nicer-threading-characters
@@ -396,18 +423,17 @@ $0`(yas-escape-text yas-selected-text)`")
    ".vue$"
    ".blade.php$"
    )
-  :config
-  (setq
-   web-mode-markup-indent-offset 2
-   web-mode-css-indent-offset 2
-   web-mode-code-indent-offset 2
-   web-mode-style-padding 2
-   web-mode-script-padding 2
-   web-mode-enable-auto-closing t
-   web-mode-enable-auto-opening t
-   web-mode-enable-auto-pairing t
-   web-mode-enable-auto-indentation t)
-
+  :custom
+   (web-mode-markup-indent-offset 2)
+   (web-mode-css-indent-offset 2)
+   (web-mode-code-indent-offset 2)
+   (web-mode-style-padding 2)
+   (web-mode-script-padding 2)
+   (web-mode-enable-auto-closing t)
+   (web-mode-enable-auto-opening t)
+   (web-mode-enable-auto-pairing t)
+   (web-mode-enable-auto-indentation t)
+   :config
   ;; Let smartparens handle auto closing brackets, e.g. {{ }} or {% %}
   ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/web/%2Bhtml.el#L56
   (dolist (alist web-mode-engines-auto-pairs)
@@ -417,3 +443,13 @@ $0`(yas-escape-text yas-selected-text)`")
                      collect (cons (car pair)
                                    (string-trim-right (cdr pair)
                                                       "\\(?:>\\|]\\|}\\)+\\'"))))))
+(use-package telega
+  :load-path "~/.emacs.d/straight/repos/telega.el/"
+  :custom
+  (telega-sticker-animated-play "/home/dperrin/.bin/tgs2png")
+  :ensure t)
+
+(use-package w3m
+  :ensure t)
+
+(use-package rust-mode)

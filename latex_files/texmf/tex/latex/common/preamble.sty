@@ -4,41 +4,41 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{preamble}
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{latexsym}
-\usepackage{amsthm}
-\usepackage{amscd}
-\usepackage{stmaryrd}
-\usepackage{mathtools}
-\usepackage{listings}
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+% \usepackage{latexsym}
+% \usepackage{amsthm}
+% \usepackage{amscd}
+% \usepackage{stmaryrd}
+% \usepackage{mathtools}
+% \usepackage{listings}
 % \usepackage{sagetex}
 
 % Include and configure algorithm2e
-\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
-\SetKwInput{KwInput}{Input}
-\SetKwInput{KwOutput}{Output}
+% \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+% \SetKwInput{KwInput}{Input}
+% \SetKwInput{KwOutput}{Output}
 
 
 
 %% Include packages and commands to include figures created in Inkscape.
 %% See https://castel.dev/post/lecture-notes-2/ for more details.
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
+% \usepackage{import}
+% \usepackage{xifthen}
+% \usepackage{pdfpages}
+% \usepackage{transparent}
 
-\newcommand{\incfig}[1]{%
-  \def\svgwidth{\columnwidth}
-  \import{./figures/}{#1.pdf_tex}
-}
+% \newcommand{\incfig}[1]{%
+%   \def\svgwidth{\columnwidth}
+%   \import{./figures/}{#1.pdf_tex}
+% }
 
-\usepackage{tikz}
-\usepackage{tikz-cd}
+% \usepackage{tikz}
+% \usepackage{tikz-cd}
 
 % Change some text formatting commands so they don't interfere with things below.
 % shortcut to get to texttt
-\renewcommand{\tt}[1]{\texttt{#1}}
+% \renewcommand{\tt}[1]{\texttt{#1}}
 
 %% Define theorem styles
 % \theoremstyle{plain}
@@ -297,6 +297,8 @@
 \DeclareMathOperator{\et}{et}
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\Ell}{Ell}
+\DeclareMathOperator{\Norm}{N}
 \newcommand{\cont}{\text{cont}}
 \newcommand{\doubleto}{%
         \mathrel{\vcenter{\mathsurround0pt

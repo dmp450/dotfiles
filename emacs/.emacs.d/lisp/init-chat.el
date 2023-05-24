@@ -10,10 +10,4 @@
 	    (setq rcirc-omit-mode nil)
 	    (rcirc-omit-mode)))
 
-(use-package telega
-  :load-path "~/.emacs.d/straight/repos/telega.el/"
-  :custom
-  (telega-sticker-animated-play "/home/dperrin/.bin/tgs2png")
-  :ensure t)
-
 (provide 'init-chat)

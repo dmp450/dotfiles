@@ -1,4 +1,5 @@
 (use-package org
+  :straight (:type built-in)
   :demand t
   :config
   (setq org-adapt-indentation t)

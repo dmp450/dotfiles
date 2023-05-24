@@ -1,3 +1,23 @@
+;; Bootstrap code for straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+       user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;; Install use-package and make use-package install with straight-use-package
+;; Effectively sets ':straight t' on everything.
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
 ;; Set emacs default stuff
 (setq inhibit-startup-message t)	; Disable the startup tutorial screen
 (setq sentence-end-double-space nil)	; Single space should end a sentence.
@@ -10,10 +30,9 @@
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))) ; set a backups directory
 (setq session-save-dir "~/emacs/sessions/")
 (setq tramp-default-method "ssh")
-(setq find-file-visit-truename t)
 (defalias 'yes-or-no-p 'y-or-n-p)	; change yes/no prompts to y/n
 (add-to-list 'exec-path "/home/dperrin/.bin")
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (set-frame-font "Source Code Pro")
 
@@ -25,7 +44,6 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-
 
 ;; disable a bunch of tool bar and stuff
 (tool-bar-mode -1)
@@ -51,33 +69,13 @@
 ;; the code in it before getting to this point.
 (load-file custom-file)
 
-;; Bootstrap code for straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el"
-       user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; Install use-package and make use-package install with straight-use-package
-;; Effectively sets ':straight t' on everything.
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
 ;; load configuration files
 (require 'init-browser)
 (require 'init-chat)
 (require 'init-elfeed)
 (require 'init-git)
 (require 'init-latex)
-(require 'init-mail)
+;; (require 'init-mail)
 (require 'init-markdown)
 (require 'init-navigation)
 (require 'init-org)
@@ -85,3 +83,4 @@
 (require 'init-themes)
 (require 'init-xah-fly-keys)
 (require 'init-yasnippet)
+

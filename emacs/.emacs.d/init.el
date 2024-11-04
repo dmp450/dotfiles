@@ -23,18 +23,19 @@
 (setq sentence-end-double-space nil)	; Single space should end a sentence.
 (setq-default fill-column 80)
 (setq column-number-mode t)		; Enable column number mode 
-(add-hook 'text-mode-hook 'auto-fill-mode)
 (setq initial-scratch-message "Welcome to Emacs :-)\n")
 (setq ring-bell-function 'ignore)
 (setq delete-old-versions -1)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))) ; set a backups directory
 (setq session-save-dir "~/emacs/sessions/")
 (setq tramp-default-method "ssh")
+(setq native-comp-async-report-warnings-errors 'silent)
 (defalias 'yes-or-no-p 'y-or-n-p)	; change yes/no prompts to y/n
 (add-to-list 'exec-path "/home/dperrin/.bin")
 ;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (set-frame-font "Source Code Pro")
+(setq pixel-scroll-precision-mode t)
 
 ;; Start Emacs maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -50,12 +51,14 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; Highlight current line
 (global-hl-line-mode t)
-
+(global-visual-line-mode 1)
 ;; Add some sane parentheses/brackets defaults globally.
 (electric-pair-mode 1)
 (show-paren-mode 1)
+
+;; Disables tab characters from being inserted.
+(setq-default indent-tabs-mode nil)
 
 ;; Enable global line number mode as per
 ;; http://ergoemacs.org/emacs/emacs_line_number_mode.html
@@ -75,12 +78,12 @@
 (require 'init-elfeed)
 (require 'init-git)
 (require 'init-latex)
-;; (require 'init-mail)
+(require 'init-mail)
 (require 'init-markdown)
 (require 'init-navigation)
 (require 'init-org)
 (require 'init-programming)
 (require 'init-themes)
-(require 'init-xah-fly-keys)
 (require 'init-yasnippet)
-
+(require 'texpresso)
+(require 'init-webdev)

@@ -4,5 +4,5 @@
 # condition: (and (not (texmathp)) (quote auto))
 # --
 \[
-`(save-excursion (previous-line)(make-string (current-indentation) ?\s))`$0
+`(save-excursion (previous-line)(make-string (+ 2 (current-indentation)) ?\s))`$0
 \]

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # contributor: Derek Perrin <derek@derekperrin.com>
-# name: frak_y
-# key: fry
+# name: frak_Y
+# key: frY
 # --
-\mathfrak{y}
+\mathfrak{Y}

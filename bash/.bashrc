@@ -19,7 +19,4 @@ fi
 complete -cf sudo
 bind 'set match-hidden-files off'
 alias mutt=neomutt
-export BROWSER=firefox
-export XDG_CONFIG_HOME=$HOME/.config
-export PATH=$PATH:$HOME/.bin
 neofetch

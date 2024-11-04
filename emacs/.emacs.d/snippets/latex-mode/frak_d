@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # contributor: Derek Perrin <derek@derekperrin.com>
-# name: frak_d
-# key: frd
+# name: frak_D
+# key: frD
 # --
-\mathfrak{d}
+\mathfrak{D}

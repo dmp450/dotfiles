@@ -3,7 +3,7 @@
 (setq sentence-end-double-space nil)	; Single space should end a sentence.
 (setq-default fill-column 80)
 (setq column-number-mode t)		; Enable column number mode 
-(add-hook 'text-mode-hook 'auto-fill-mode)
+;; (add-hook 'text-mode-hook 'auto-fill-mode)
 (setq initial-scratch-message "Welcome to Emacs :-)\n")
 (setq ring-bell-function 'ignore)
 (setq delete-old-versions -1)
@@ -11,9 +11,9 @@
 (setq session-save-dir "~/emacs/sessions/")
 (setq tramp-default-method "ssh")
 (setq find-file-visit-truename t)
+(setq native-comp-async-report-warnings-errors 'silent)
 (defalias 'yes-or-no-p 'y-or-n-p)	; change yes/no prompts to y/n
 (add-to-list 'exec-path "/home/dperrin/.bin")
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (set-frame-font "Source Code Pro")
 
@@ -34,6 +34,9 @@
 
 ;; Highlight current line
 (global-hl-line-mode t)
+
+;; Enable global scroll precision mode
+(pixel-scroll-precision-mode 1)
 
 ;; Add some sane parentheses/brackets defaults globally.
 (electric-pair-mode 1)
@@ -68,20 +71,21 @@
 
 ;; Install use-package and make use-package install with straight-use-package
 ;; Effectively sets ':straight t' on everything.
-(straight-use-package 'use-package)
+;; (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
 ;; load configuration files
+(require 'init-org)
 (require 'init-browser)
 (require 'init-chat)
 (require 'init-elfeed)
 (require 'init-git)
 (require 'init-latex)
+(require 'texpresso)
 (require 'init-mail)
 (require 'init-markdown)
 (require 'init-navigation)
-(require 'init-org)
 (require 'init-programming)
 (require 'init-themes)
-(require 'init-xah-fly-keys)
 (require 'init-yasnippet)
+(require 'init-lsp)

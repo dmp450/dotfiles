@@ -34,7 +34,7 @@
 (add-to-list 'exec-path "/home/dperrin/.bin")
 ;; (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(setq default-frame-alist '((font . "Source Code Pro")))
+(setq default-frame-alist '((font . "Iosevka")))
 (setq pixel-scroll-precision-mode t)
 
 ;; Start Emacs maximized

@@ -37,6 +37,12 @@
 (set-frame-font "Source Code Pro")
 (setq pixel-scroll-precision-mode t)
 
+;; treesit grammars
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (typst "https://github.com/uben0/tree-sitter-typst")))
+
 ;; Start Emacs maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -73,11 +79,13 @@
 (load-file custom-file)
 
 ;; load configuration files
+(require 'init-lsp)
 (require 'init-browser)
 (require 'init-chat)
 (require 'init-elfeed)
 (require 'init-git)
 (require 'init-latex)
+(require 'init-typst)
 (require 'init-mail)
 (require 'init-markdown)
 (require 'init-navigation)
